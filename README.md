@@ -12,8 +12,12 @@
  
  
  ## Modules + Classes
-### record
-#### class Muse()
+#### module
+##### class
+
+#### muse
+##### Muse()
+
 def connect(self, interface=None, backend='auto'):
         """Connect to the device, either BLueMuse of pygatt"""
         
@@ -41,15 +45,8 @@ def _unpack_eeg_channel(self, packet):
         samples with a 12 bit resolution.
 
 
-
-
-
-### muse
-
-
-
-### stream
- 
+#### stream
+##### 
  
  
  ## How to run...
