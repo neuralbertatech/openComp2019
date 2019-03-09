@@ -18,13 +18,16 @@ class Game:
 
         def start(self):
             self.main_menu = MainMenu(self.window)
-            while(1):
+            while True:
                 events = pygame.event.get()
                 for event in events:
                     if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_ESC:
+                        if event.key == pygame.K_ESCAPE:
                             self.window.close()
                             break
+                    elif event.type == pygame.QUIT:
+                        self.window.close()
+                        break
 
 
     instance = None
