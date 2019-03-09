@@ -18,7 +18,7 @@ class Game:
 
         def start(self):
             self.main_menu = MainMenu(self.window)
-            while True:
+            while(1):
                 events = pygame.event.get()
                 for event in events:
                     if event.type == pygame.KEYDOWN:
