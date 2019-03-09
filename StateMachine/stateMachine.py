@@ -1,12 +1,12 @@
 class StateMachine:
-    def __init__(self, initialState):
-        self.currentState = initialState
-        self.currentState.run()
+    def __init__(self, initial_state):
+        self.current_state = initial_state
+        self.current_state.run()
     # Template method:
-    def runAll(self, inputs):
+    def run_all(self, inputs):
         for i in inputs:
             print(i)
-            self.currentState = self.currentState.next(i)
-            self.currentState.run()
+            self.current_state = self.current_state.next(i)
+            self.current_state.run()
 
             
