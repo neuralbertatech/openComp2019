@@ -25,8 +25,17 @@ class MainMenuState (State):
         self.draw_bg()
         self.window.update()
 
-    def next(self, input):
-        #### TODO Give condition to chenge to different states
+    def next(self, events):
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONUP:
+                pos = pygame.mouse.get_pos()
+
+                if self.play_button.clicked(pos):
+                    return WindowState.game
+                
+                elif self.settings_button.clicked(pos):
+                    return WindowState.settings
+                
         return WindowState.main_menu
 
     def draw_buttons(self):

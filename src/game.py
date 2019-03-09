@@ -22,6 +22,8 @@ class Game:
                             return
 
                 self.window_manager.run(events)
+                self.window.update()
+                pygame.clock.tick(15)
 
 
     def __init__(self, width = 1280, height = 720):
