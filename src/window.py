@@ -1,61 +1,8 @@
-# This is the main execution file.
-
-# This module provides support for simple graphical games.
-
 from pygame import init, quit, Color, Surface, Rect, KEYUP, K_SPACE, K_RETURN, K_z, K_LSHIFT, K_RSHIFT, K_CAPSLOCK, K_BACKSPACE
 from pygame.display import set_caption, set_mode, update
 from pygame.font import SysFont, Font
 from pygame.event import poll
 from pygame.key import get_pressed, name
-
-import pygame
-
-class Game:
-    class __Game:
-        def __init__(self, width, height):
-            self.window = Window('Hello World', width, height)
-
-
-        def start(self):
-            self.main_menu = MainMenu(self.window)
-            while(1):
-                events = pygame.event.get()
-                for event in events:
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_ESC:
-                            self.window.close()
-                            break
-
-
-    instance = None
-
-    def __init__(self, width = 1280, height = 720):
-        if(not self.instance):
-            self.instance = self.__Game(width, height)
-
-    def start(self):
-        self.instance.start()
-
-class MainMenu:
-    def __init__(self, window):
-        self.window = window
-        self.draw_buttons()
-        self.draw_bg()
-        self.window.update()
-
-    def draw_buttons(self):
-        width = self.window.get_width()
-        height = self.window.get_height()
-        self.window.draw_string('Play', width/2, height*2/5)
-
-    def draw_bg(self):
-        self.window.set_bg_color('green')
-
-
-class WindowManager:
-    def __init__(self):
-        pass
-
 
 
 class Window:
@@ -243,51 +190,3 @@ class Window:
         while event.type != KEYUP:
             event = poll()
         return event.key
-
-def _test():
-    # To test the code in this module remove the # from
-    # the #_test line below. Don't forget to put the #
-    # back before saving the module for production use.
-    # When testing try the backspace key.
-
-    window_width = 500
-    window_height = 400
-    title = 'Shooter Game'
-    window = Window(title, window_width, window_height)
-    string = window.input_string('Enter text >', 0, 0)
-    window.clear()
-    surface = window.get_surface()
-    width = window.get_width()
-    height = window.get_height()
-    s_width = surface.get_width()
-    s_height = surface.get_height()
-    if width == s_width == window_width:
-        window.draw_string(str(width), 0, 0)
-    else:
-        window.draw_string('width error', 0, 0)
-    if height == s_height == window_height:
-        window.draw_string(str(height), width // 2, height // 2)
-    else:
-        window.draw_string('height error', width // 2, height // 2)
-    height = window.get_font_height()
-    width = window.get_string_width(string)
-    window.draw_string(string, 0, height)
-    window.draw_string(string, width, height)
-    window.update()
-    window.set_font_name('couriernew')
-    window.set_font_size(24)
-    window.set_font_color('yellow')
-    window.set_bg_color('blue')
-    font_color = window.get_font_color()
-    bg_color = window.get_bg_color()
-    window.draw_string(font_color, 200, 200)
-    window.draw_string(bg_color, 300, 300)
-    height = window.get_font_height()
-    window.input_string('press any key to close window', 0, window_height - height)
-    window.close()
-
-
-
-if __name__ == '__main__':
-    game = Game()
-    game.start()
