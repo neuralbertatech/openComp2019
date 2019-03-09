@@ -19,7 +19,7 @@
 ##### Muse()
 
 def connect(self, interface=None, backend='auto'):
-        """Connect to the device, either BLueMuse of pygatt"""
+        """Connect to the device, either BlueMuse or pygatt"""
         
 def start(self):
         """Start streaming."""
