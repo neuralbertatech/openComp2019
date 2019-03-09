@@ -4,61 +4,6 @@ from pygame.font import SysFont, Font
 from pygame.event import poll
 from pygame.key import get_pressed, name
 
-<<<<<<< HEAD:game/main.py
-import pygame
-
-class Game:
-    class __Game:
-        def __init__(self, width, height):
-            self.window = Window('Hello World', width, height)
-
-
-        def start(self):
-            self.main_menu = MainMenu(self.window)
-            while(1):
-                events = pygame.event.get()
-                for event in events:
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_ESCAPE:
-                            self.window.close()
-                            break
-                    elif event.type == pygame.QUIT:
-                        self.window.close()
-                        break
-
-
-    instance = None
-
-    def __init__(self, width = 1280, height = 720):
-        if(not self.instance):
-            self.instance = self.__Game(width, height)
-
-    def start(self):
-        self.instance.start()
-
-class MainMenu:
-    def __init__(self, window):
-        self.window = window
-        self.draw_buttons()
-        self.draw_bg()
-        self.window.update()
-
-    def draw_buttons(self):
-        width = self.window.get_width()
-        height = self.window.get_height()
-        self.window.draw_string('Play', width/2, height*2/5)
-
-    def draw_bg(self):
-        self.window.set_bg_color('green')
-
-
-class WindowManager:
-    def __init__(self):
-        pass
-
-
-=======
->>>>>>> 236d3d78842d068f927b01665f3f6bd8b32b582f:src/window.py
 
 class Window:
     # A Window represents a display window with a title bar,
