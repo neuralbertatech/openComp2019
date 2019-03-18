@@ -13,6 +13,7 @@ class Game:
 
 
         def run(self):
+            clock = pygame.time.Clock()
             while(1):
                 events = pygame.event.get()
                 for event in events:
@@ -23,7 +24,7 @@ class Game:
 
                 self.window_manager.run(events)
                 self.window.update()
-                pygame.clock.tick(15)
+                clock.tick(15)
 
 
     def __init__(self, width = 1280, height = 720):
