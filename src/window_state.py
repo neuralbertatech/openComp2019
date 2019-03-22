@@ -114,30 +114,25 @@ class GameState (State):
 
     def spawn_bullet(self):
         height = self.window.get_height()
-        bullet = rect(50,height*4/5+25,30,5,self.window.__surface__, 'red')
+        bullet = rect(200,height*4/5+25,30,5,self.window.__surface__, 'red')
         self.projectiles.append(bullet)
-
 
     def update_enemies(self):
         for enemy in self.enemies:
-            enemy.x -= 2
+            pygame.Rect.move_ip(enemy.rectangle, -2, 0)
             enemy.draw()
 
     def update_projectiles(self):
         for projectile in self.projectiles:
-            projectile.x += 10
+            pygame.Rect.move_ip(projectile.rectangle, 10, 0)
             projectile.draw()
 
     def check_collision(self):
         try:
-            pos = (self.projectiles[0].x + self.projectiles[0].width, \
-                   self.projectiles[0].y + self.projectiles[0].height/2)
-            #print(pos)
-            #print("ENEMIES {}".format(self.enemies[0].y))
-            if(self.enemies[0].intersect(pos)):
+            
+            if( pygame.Rect.colliderect(self.enemies[0].rectangle, self.projectiles[0].rectangle) ):
                 self.projectiles.pop(0)
                 self.enemies.pop(0)
-                #print("DESTROYED")
         except Exception as e:
-                #print("BROKE {}".format(e))
+                print("BROKE {}".format(e))
                 pass
