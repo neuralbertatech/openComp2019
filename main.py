@@ -1,9 +1,8 @@
-from MuseManager import MuseManager
+from src.MuseManager import MuseManager
 
 def main():
     manager = MuseManager()
-    # manager.start_streaming()
-    manager.lsl_stream()
+    manager.start_streaming()
 
 
 main()
