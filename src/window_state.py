@@ -43,6 +43,8 @@ class MainMenuState (State):
 
                 #elif self.settings_button.clicked(pos):
                 #    return WindowState.settings
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                return WindowState.game
 
         return WindowState.main_menu
 
@@ -53,7 +55,7 @@ class MainMenuState (State):
         self.window.draw_string('Play', width/2, height*2/5)
 
     def draw_bg(self):
-        self.window.set_bg_color('green')
+        self.window.set_bg_color('yellow')
 
 class SettingsState (State):
     pass
@@ -90,7 +92,6 @@ class GameState (State):
                     self.spawn_bullet()
 
 
-
         return WindowState.game
 
 
@@ -114,7 +115,7 @@ class GameState (State):
 
     def spawn_bullet(self):
         height = self.window.get_height()
-        bullet = rect(200,height*4/5+25,30,5,self.window.__surface__, 'red')
+        bullet = rect(100,height*4/5+25,30,5,self.window.__surface__, 'red')
         self.projectiles.append(bullet)
 
     def update_enemies(self):
@@ -123,13 +124,19 @@ class GameState (State):
             enemy.draw()
 
     def update_projectiles(self):
+        height = self.window.get_height()
+
         for projectile in self.projectiles:
             pygame.Rect.move_ip(projectile.rectangle, 10, 0)
+
+            if(pygame.Rect.collidepoint(projectile.rectangle, 1280, height*4/5+26)):
+                self.projectiles.pop(0)
+
             projectile.draw()
 
     def check_collision(self):
         try:
-            
+
             if( pygame.Rect.colliderect(self.enemies[0].rectangle, self.projectiles[0].rectangle) ):
                 self.projectiles.pop(0)
                 self.enemies.pop(0)

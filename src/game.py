@@ -20,10 +20,12 @@ class Game:
             while(1):
                 events = pygame.event.get()
                 for event in events:
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_ESCAPE:
-                            self.window.close()
-                            return
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                        self.window.close()
+                        return
+                    if event.type == pygame.QUIT:
+                        self.window.close()
+                        return
 
                 self.window_manager.run(events)
                 self.window.update()
