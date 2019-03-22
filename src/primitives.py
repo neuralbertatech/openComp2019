@@ -8,17 +8,18 @@ class primitive:
         assert 0;
 
 class rect(primitive):
-    def __init__(self, x, y, w, h, color, screen):
-        self.x = x
-        self.y = y
-        self.height = h
-        self.width = w
-        self.color = color
+    def __init__(self, x, y, w, h, screen, colour):
+        self.rectangle = pygame.Rect(x, y, w, h)
         self.screen = screen
 
+        self.x = x
+        self.y = y
+        self.width = w
+        self.height = h
+        self.colour = colour
+
     def draw(self):
-        pos = [self.x, self.y, self.width, self.height]
-        pygame.draw.rect(self.screen, self.color, pos)
+        pygame.draw.rect(self.screen, pygame.Color(self.colour), self.rectangle)
 
     def intersect(self, pos):
         print(pos)

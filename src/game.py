@@ -9,7 +9,7 @@ class Game:
         def __init__(self, width, height):
             self.window = Window('Hello World', width, height)
             self.window_manager = WindowManager(self.window)
-            
+
 
 
         def run(self):
