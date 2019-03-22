@@ -7,9 +7,12 @@ class Game:
 
     class __Game:
         def __init__(self, width, height):
-            self.window = Window('Hello World', width, height)
+            self.window = Window('NeurAlbertaTech', width, height)
             self.window_manager = WindowManager(self.window)
 
+            # Set the window icon
+            window_icon = pygame.image.load("NeurAlbertaTechLogo.png")
+            pygame.display.set_icon(window_icon)
 
 
         def run(self):
