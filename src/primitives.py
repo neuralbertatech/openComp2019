@@ -20,8 +20,9 @@ class rect(primitive):
         self.content = content
 
     def draw(self):
-        pygame.draw.rect(self.screen, pygame.Color(self.colour), self.rectangle)
-        if self.content != None:
+        if self.content == None:
+            pygame.draw.rect(self.screen, pygame.Color(self.colour), self.rectangle)
+        else:
             self.screen.blit(pygame.image.load(self.content), (self.x, self.y))
 
     def intersect(self, pos):

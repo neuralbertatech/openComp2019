@@ -150,25 +150,27 @@ class GameState (State):
         height = self.window.get_height()
         width = self.window.get_width()
 
-        enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red')
+        enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
         self.enemies.append(enemy)
         self.enemiesStrength.append(strength)
 
     def spawn_bullet(self):
         height = self.window.get_height()
-        bullet = rect(100,height*4/5+70,30,5,self.window.__surface__, 'gray')
+        bullet = rect(100,height*4/5+67,30,5,self.window.__surface__, 'gray', 'bullet.png')
         self.projectiles.append(bullet)
         self.bullet_count -= 1
 
     def update_enemies(self):
         for enemy in self.enemies:
             pygame.Rect.move_ip(enemy.rectangle, -1, 0)
+            enemy.x -= 1
 
     def update_projectiles(self):
         height = self.window.get_height()
 
         for projectile in self.projectiles:
             pygame.Rect.move_ip(projectile.rectangle, 15, 0)
+            projectile.x += 15
 
             if(pygame.Rect.collidepoint(projectile.rectangle, 1280, height*4/5+26)):
                 self.projectiles.pop(0)
