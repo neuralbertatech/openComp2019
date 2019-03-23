@@ -52,13 +52,22 @@ class MainMenuState (State):
     def draw_buttons(self):
         width = self.window.get_width()
         height = self.window.get_height()
+<<<<<<< HEAD
         # self.play_button.draw()
+=======
+        self.play_button.draw()
+        self.window.set_font_size(40)
+>>>>>>> 8d663da30b983a9672b8cccb9e7f38e6a519ad3c
         self.window.draw_string('Play', width/2, height*2/5)
         self.window.draw_string('Settings', width/2-12, height*2/5+20)
 
     def draw_bg(self):
+<<<<<<< HEAD
         color = (35,99,47,100)
         self.window.__surface__.fill(color)
+=======
+        self.window.set_bg_color('black')
+>>>>>>> 8d663da30b983a9672b8cccb9e7f38e6a519ad3c
 
 class SettingsState (State):
     pass
@@ -67,17 +76,30 @@ class GameState (State):
     def __init__(self, window):
         self.window = window
         self.frame = 0;
+        self.fire_rate = 100
         self.queue = deque([100,200,400, 500, 650])
         self.enemies = []
         self.projectiles = []
+<<<<<<< HEAD
+=======
+        self.window.set_bg_color('black')
+        self.bullet_count = 1000
+
+        self.window.set_font_size(60)
+>>>>>>> 8d663da30b983a9672b8cccb9e7f38e6a519ad3c
 
         height = self.window.get_height()
         red = (255,0,255)
         self.player = rect(50,height*4/5,50,200,window.__surface__, 'yellow')
 
+<<<<<<< HEAD
     def draw_bg(self):
         color = (35,99,47,100)
         self.window.__surface__.fill(color)
+=======
+    def print_bullet_count(self):
+        self.window.draw_string('Bullets: ' + str(self.bullet_count), 0, 0)
+>>>>>>> 8d663da30b983a9672b8cccb9e7f38e6a519ad3c
 
     def run(self):
         self.window.clear()
@@ -86,17 +108,27 @@ class GameState (State):
         self.update_enemies()
         self.update_projectiles()
         self.check_collision()
+        self.fire_bullet()
+        self.print_bullet_count()
         self.player.draw()
         self.frame += 1
         self.window.update()
 
-
+    def fire_bullet(self):
+        if self.fire_rate <= self.frame:
+            self.spawn_bullet()
+            self.frame = 0
+        else:
+            self.frame += 1
     def next(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    self.spawn_bullet()
-
+                if event.key == pygame.K_p:
+                    if self.fire_rate > 10:
+                        self.fire_rate -= 10
+                if event.key == pygame.K_l:
+                    if self.fire_rate < 100:
+                        self.fire_rate += 10
 
         return WindowState.game
 
@@ -123,6 +155,7 @@ class GameState (State):
         height = self.window.get_height()
         bullet = rect(100,height*4/5+25,30,5,self.window.__surface__, 'pink')
         self.projectiles.append(bullet)
+        self.bullet_count -= 1
 
     def update_enemies(self):
         for enemy in self.enemies:
