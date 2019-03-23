@@ -31,7 +31,7 @@ class Game:
 
                 self.window_manager.run(events)
                 self.window.update()
-                clock.tick(300)
+                clock.tick(1000)
 
                 print(self.window.__bg_color__)
 
