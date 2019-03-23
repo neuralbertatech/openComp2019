@@ -29,7 +29,7 @@ class Game:
 
                 self.window_manager.run(events)
                 self.window.update()
-                clock.tick(15)
+                clock.tick(100)
 
 
     def __init__(self, width = 1280, height = 720):
