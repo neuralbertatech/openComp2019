@@ -122,7 +122,7 @@ class GameState (State):
 
     def update_enemies(self):
         for enemy in self.enemies:
-            pygame.Rect.move_ip(enemy.rectangle, -2, 0)
+            pygame.Rect.move_ip(enemy.rectangle, -1, 0)
             enemy.draw()
 
     def update_projectiles(self):
@@ -138,10 +138,10 @@ class GameState (State):
 
     def check_collision(self):
         try:
-
             if( pygame.Rect.colliderect(self.enemies[0].rectangle, self.projectiles[0].rectangle) ):
                 self.projectiles.pop(0)
                 self.enemies.pop(0)
+
         except Exception as e:
-                print("BROKE {}".format(e))
+                #print("BROKE {}".format(e))
                 pass
