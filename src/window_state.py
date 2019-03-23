@@ -90,7 +90,7 @@ class GameState (State):
         self.check_collision()
         self.fire_bullet()
         self.frame += 1
-        self.window.update()
+        time.sleep(0.0001) # set game velocity by pausing
 
     def draw_bg(self):
         color = (35,99,47,100)
