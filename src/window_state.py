@@ -2,6 +2,7 @@ from state import State
 from primitives import rect
 from collections import deque
 import pygame
+import time
 
 class WindowState:
     def __init__(self, state_str, state):
@@ -87,6 +88,19 @@ class GameState (State):
         red = (255,0,255)
         self.player = rect(50,height*4/5,50,200,window.__surface__, 'yellow')
 
+    def run(self):
+        self.window.clear()
+        self.draw_bg()
+        self.print_bullet_count()
+        self.draw()
+        #self.generate_enemy()
+        self.update_enemies()
+        self.update_projectiles()
+        self.check_collision()
+        self.fire_bullet()
+        self.frame += 1
+        self.window.update()
+
     def draw_bg(self):
         color = (35,99,47,100)
         self.window.__surface__.fill(color)
@@ -94,18 +108,6 @@ class GameState (State):
     def print_bullet_count(self):
         self.window.draw_string('Bullets: ' + str(self.bullet_count), 0, 0)
 
-    def run(self):
-        self.window.clear()
-        self.draw_bg()
-        self.generate_enemy()
-        self.update_enemies()
-        self.update_projectiles()
-        self.check_collision()
-        self.fire_bullet()
-        self.print_bullet_count()
-        self.player.draw()
-        self.frame += 1
-        self.window.update()
 
     def fire_bullet(self):
         if self.fire_rate <= self.frame:
@@ -113,6 +115,7 @@ class GameState (State):
             self.frame = 0
         else:
             self.frame += 1
+
     def next(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
@@ -124,21 +127,22 @@ class GameState (State):
                         self.fire_rate += 10
 
         return WindowState.game
+    def draw(self):
+        for enemy in self.enemies:
+            enemy.draw()
+        for projectile in self.projectiles:
+            projectile.draw()
+
+        self.player.draw()
 
 
     def generate_enemy(self):
-        self.handle_enemy_queue()
-
         while(self.queue[0] < self.frame):
             self.queue.popleft()
             self.spawn_enemy(1)
 
 
-    def handle_enemy_queue(self):
-        pass
-
-
-    def spawn_enemy(self, strength):
+    def spawn_enemy(self):
         height = self.window.get_height()
         width = self.window.get_width()
 
@@ -155,7 +159,6 @@ class GameState (State):
     def update_enemies(self):
         for enemy in self.enemies:
             pygame.Rect.move_ip(enemy.rectangle, -1, 0)
-            enemy.draw()
 
     def update_projectiles(self):
         height = self.window.get_height()
@@ -165,8 +168,6 @@ class GameState (State):
 
             if(pygame.Rect.collidepoint(projectile.rectangle, 1280, height*4/5+26)):
                 self.projectiles.pop(0)
-
-            projectile.draw()
 
     def check_collision(self):
         try:

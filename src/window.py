@@ -107,7 +107,6 @@ class Window:
         # Erase the window contents
         # - self is the Window
 
-        self.__surface__.fill(Color(self.__bg_color__))
         if self.__auto_update__:
             update()
 
