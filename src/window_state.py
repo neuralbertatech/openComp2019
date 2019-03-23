@@ -139,10 +139,6 @@ class GameState (State):
             if( pygame.Rect.colliderect(self.enemies[0].rectangle, self.projectiles[0].rectangle) ):
                 self.projectiles.pop(0)
                 self.enemies.pop(0)
-            if self.projectiles[0].rectagle.x >= self.enemies[0].rectangle.x:
-                print('TEST')
-                self.projectiles.pop(0)
-                self.enemies.pop(0)
 
         except Exception as e:
                 #print("BROKE {}".format(e))
