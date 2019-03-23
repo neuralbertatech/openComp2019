@@ -29,7 +29,6 @@ class MainMenuState (State):
 
     def run(self):
         self.draw_buttons()
-        self.draw_bg()
         self.window.update()
 
     def next(self, events):
@@ -39,11 +38,13 @@ class MainMenuState (State):
 
                 if self.play_button.intersect(pos):
                     #print("State: {}".format(WindowState.game))
+                    self.draw_bg()
                     return WindowState.game
 
                 #elif self.settings_button.clicked(pos):
                 #    return WindowState.settings
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                self.draw_bg()
                 return WindowState.game
 
         return WindowState.main_menu
@@ -51,8 +52,9 @@ class MainMenuState (State):
     def draw_buttons(self):
         width = self.window.get_width()
         height = self.window.get_height()
-        self.play_button.draw()
+        # self.play_button.draw()
         self.window.draw_string('Play', width/2, height*2/5)
+        self.window.draw_string('Settings', width/2-12, height*2/5+20)
 
     def draw_bg(self):
         self.window.set_bg_color('yellow')
