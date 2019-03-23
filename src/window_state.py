@@ -29,6 +29,7 @@ class MainMenuState (State):
         height = self.window.get_height()
         self.play_button = rect((width/2)-34, (height*2/5)-14, 68, 28, window.__surface__,'green')
         self.settings_button = rect((width/2)-68, (height*2/5)+20, 135, 28, window.__surface__,'green')
+        self.quit_button = rect((width/2)-38, (height*2/5)+50, 135, 28, window.__surface__,'green')
 
     def run(self):
         self.draw_buttons()
@@ -51,6 +52,11 @@ class MainMenuState (State):
                     # NOT IMPLEMENTED YET
                     return WindowState.settings
 
+                # Clicked on Quit Button
+                elif self.quit_button.intersect(pos):
+                    # Purposely crash program
+                    return
+
             # Pressed return key, start game
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 self.draw_bg()
@@ -66,6 +72,7 @@ class MainMenuState (State):
         self.window.set_font_size(40)
         self.window.draw_string('Play',(width/2)-34, (height*2/5)-14, pygame.Color(0,0,0,100))
         self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,100))
+        self.window.draw_string('Quit', (width/2)-38, (height*2/5)+50, pygame.Color(0,0,0,100))
 
     def draw_bg(self):
         color = (35,99,47,100)
@@ -168,8 +175,9 @@ class GameState (State):
             pygame.Rect.move_ip(enemy.rectangle, -1, 0)
             enemy.x -= 1
 
-            self.window.draw_string('Next Enemy HP: ' + str(self.enemiesStrength[0]),  width - self.window.get_string_width('Next Enemy HP: ' + str(self.enemiesStrength[0])), 0, pygame.Color(35,99,47,100))
+            self.window.draw_string('Next Enemy HP: ' + str(self.enemiesStrength[0] + 1),  width - self.window.get_string_width('Next Enemy HP: ' + str(self.enemiesStrength[0] + 1)), 0, pygame.Color(35,99,47,100))
 
+        # Display an empty amount of HP if
         if(len(self.enemies) == 0):
             self.window.draw_string('Next Enemy HP:  ',  width - self.window.get_string_width('Next Enemy HP:  '), 0, pygame.Color(35,99,47,100))
 
