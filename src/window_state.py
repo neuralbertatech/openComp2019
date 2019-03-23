@@ -3,6 +3,7 @@ from primitives import rect
 from collections import deque
 import pygame
 import time
+import random
 
 class WindowState:
     def __init__(self, state_str, state):
@@ -138,7 +139,7 @@ class GameState (State):
 
 
     def generate_enemy(self):
-        if self.frame_enemy > 60:
+        if random.randint(-2000, 0)+self.frame_enemy > 60 and self.frame_enemy > 60:
             self.spawn_enemy(5)
             self.frame_enemy = 0
         else:
