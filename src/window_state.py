@@ -29,6 +29,7 @@ class MainMenuState (State):
         height = self.window.get_height()
         self.play_button = rect((width/2)-34, (height*2/5)-14, 68, 28, window.__surface__,'green')
         self.settings_button = rect((width/2)-68, (height*2/5)+20, 135, 28, window.__surface__,'green')
+        self.quit_button = rect((width/2)-68, (height*2/5)+50, 135, 28, window.__surface__,'green')
 
     def run(self):
         self.draw_buttons()
@@ -51,6 +52,10 @@ class MainMenuState (State):
                     # NOT IMPLEMENTED YET
                     return WindowState.settings
 
+                elif self.quit_button.intersect(pos):
+                    # Intentially break the game
+                    return
+
             # Pressed return key, start game
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 self.draw_bg()
@@ -64,8 +69,9 @@ class MainMenuState (State):
         self.play_button.draw()
         self.settings_button.draw()
         self.window.set_font_size(40)
-        self.window.draw_string('Play',(width/2)-34, (height*2/5)-14, pygame.Color(0,0,0,100))
-        self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,100))
+        self.window.draw_string('Play',(width/2)-34, (height*2/5)-14, pygame.Color(0,0,0,0))
+        self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,0))
+        self.window.draw_string('Quit', (width/2)-35, (height*2/5)+50, pygame.Color(0,0,0,0))
 
     def draw_bg(self):
         color = (35,99,47,100)
@@ -80,7 +86,7 @@ class GameState (State):
         self.frame_bullet = 0;
         self.frame_enemy = 0;
         self.fire_rate = 100
-        self.queue = deque([100,200,400, 500, 650])
+        self.queue = deque([100,200,400,500,650])
         self.bullet_count = 1000
         self.enemies = []
         self.enemiesStrength = []
@@ -179,12 +185,14 @@ class GameState (State):
         try:
             if( pygame.Rect.colliderect(self.enemies[0].rectangle, self.projectiles[0].rectangle) ):
                 self.projectiles.pop(0)
-
-                if(enemiesStrength[0] == 0):
+                print('Hello')
+                print(self.enemiesStrength[0])
+                if(self.enemiesStrength[0] == 0):
                     self.enemies.pop(0)
                     self.enemiesStrength.pop(0)
                 else:
                     self.enemiesStrength[0] -= 1
+                    print(enemiesStrength[0])
 
         except Exception as e:
                 pass
