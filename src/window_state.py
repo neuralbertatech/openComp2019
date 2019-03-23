@@ -88,6 +88,7 @@ class GameState (State):
 
         height = self.window.get_height()
         self.player = rect(50,height*4/5,50,200,window.__surface__, 'yellow')
+        self.player.draw()
 
     def run(self):
         self.window.clear()
@@ -177,6 +178,7 @@ class GameState (State):
         try:
             if( pygame.Rect.colliderect(self.enemies[0].rectangle, self.projectiles[0].rectangle) ):
                 self.projectiles.pop(0)
+
                 if(enemiesStrength[0] == 0):
                     self.enemies.pop(0)
                     self.enemiesStrength.pop(0)
