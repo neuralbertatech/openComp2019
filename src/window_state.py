@@ -84,6 +84,7 @@ class GameState (State):
         self.bullet_count = 1000
         self.enemies = []
         self.enemiesStrength = []
+        self.score = 0
         self.projectiles = []
 
         height = self.window.get_height()
@@ -92,23 +93,14 @@ class GameState (State):
 
     def run(self):
         self.window.clear()
-        self.draw_bg()
-        self.print_bullet_count()
         self.draw()
         self.generate_enemy()
         self.update_enemies()
         self.update_projectiles()
         self.check_collision()
         self.fire_bullet()
+        self.score = pygame.time.get_ticks() // 1000
         time.sleep(0.0001) # set game velocity by pausing
-
-    def draw_bg(self):
-        color = (35,99,47,100)
-        self.window.__surface__.fill(color)
-
-    def print_bullet_count(self):
-        self.window.draw_string('Bullets: ' + str(self.bullet_count), 0, 0, pygame.Color(35,99,47,100))
-
 
     def fire_bullet(self):
         if self.fire_rate <= self.frame_bullet:
@@ -131,12 +123,21 @@ class GameState (State):
 
 
     def draw(self):
+        color = (35,99,47,100)
+        self.window.__surface__.fill(color)
+
+        self.window.draw_string('Bullets: ' + str(self.bullet_count), 0, 0, pygame.Color(35,99,47,100))
+
         for enemy in self.enemies:
             enemy.draw()
         for projectile in self.projectiles:
             projectile.draw()
 
         self.player.draw()
+
+        self.window.draw_string('Time: ' + str(self.score),  self.window.get_width() - self.window.get_string_width('Time: ' + str(self.score)), 0, pygame.Color(35,99,47,100))
+
+
 
 
     def generate_enemy(self):
