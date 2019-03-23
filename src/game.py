@@ -17,8 +17,6 @@ class Game:
 
         def run(self):
             clock = pygame.time.Clock()
-            pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-
             while(1):
                 events = pygame.event.get()
                 for event in events:
@@ -30,10 +28,7 @@ class Game:
                         return
 
                 self.window_manager.run(events)
-                self.window.update()
-                clock.tick(1000)
-
-                print(self.window.__bg_color__)
+                clock.tick(50)
 
 
     def __init__(self, width = 1280, height = 720):
