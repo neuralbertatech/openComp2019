@@ -31,6 +31,8 @@ class Game:
                 self.window.update()
                 clock.tick(100)
 
+                print(self.window.__bg_color__)
+
 
     def __init__(self, width = 1280, height = 720):
         if(not self.instance):

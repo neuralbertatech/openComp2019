@@ -55,7 +55,7 @@ class MainMenuState (State):
         self.window.draw_string('Play', width/2, height*2/5)
 
     def draw_bg(self):
-        self.window.set_bg_color('yellow')
+        self.window.set_bg_color((255, 255, 255, 255))
 
 class SettingsState (State):
     pass
@@ -75,6 +75,8 @@ class GameState (State):
         red = (255,0,0)
         self.player = rect(50,height*4/5,50,200,window.__surface__, 'red')
 
+    def print_bullet_count(self):
+        self.window.draw_string(str(self.bullet_count), 0, 0)
 
     def run(self):
         self.window.clear()
