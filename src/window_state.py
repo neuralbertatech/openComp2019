@@ -94,12 +94,8 @@ class GameState (State):
         self.projectiles = []
 
         height = self.window.get_height()
-<<<<<<< HEAD
         self.player = rect(50,height*4/5,50,200,window.__surface__, 'yellow')
         self.player.draw()
-=======
-        self.player = rect(50,height*4/5,50,200,window.__surface__, 'yellow', 'soldier.png')
->>>>>>> 547c76a7ca3115de16db86253746a22867d4d129
 
     def run(self):
         self.window.clear()
@@ -145,7 +141,8 @@ class GameState (State):
 
         self.player.draw()
 
-        self.window.draw_string('Time: ' + str(self.score),  self.window.get_width() - self.window.get_string_width('Time: ' + str(self.score)), 0, pygame.Color(35,99,47,100))
+        self.window.draw_string('Time: ' + str(self.score),  self.window.get_width() - self.window.get_string_width('Time: ' + str(self.score)), 30, pygame.Color(35,99,47,100))
+
 
 
 
@@ -172,8 +169,15 @@ class GameState (State):
         self.bullet_count -= 1
 
     def update_enemies(self):
+        height = self.window.get_height()
+        width = self.window.get_width()
         for enemy in self.enemies:
             pygame.Rect.move_ip(enemy.rectangle, -1, 0)
+
+            self.window.draw_string('Next Enemy HP: ' + str(self.enemiesStrength[0]),  width - self.window.get_string_width('Next Enemy HP: ' + str(self.enemiesStrength[0])), 0, pygame.Color(35,99,47,100))
+
+        if(len(self.enemies) == 0):
+            self.window.draw_string('Next Enemy HP:  ',  width - self.window.get_string_width('Next Enemy HP:  '), 0, pygame.Color(35,99,47,100))
 
     def update_projectiles(self):
         height = self.window.get_height()
@@ -188,14 +192,12 @@ class GameState (State):
         try:
             if( pygame.Rect.colliderect(self.enemies[0].rectangle, self.projectiles[0].rectangle) ):
                 self.projectiles.pop(0)
-                print('Hello')
-                print(self.enemiesStrength[0])
+
                 if(self.enemiesStrength[0] == 0):
                     self.enemies.pop(0)
                     self.enemiesStrength.pop(0)
                 else:
                     self.enemiesStrength[0] -= 1
-                    print(enemiesStrength[0])
 
         except Exception as e:
                 pass

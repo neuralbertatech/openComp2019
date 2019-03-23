@@ -33,3 +33,9 @@ class rect(primitive):
             return True
 
         return False
+
+    def getX():
+        return self.x
+
+    def getY():
+        return self.y
