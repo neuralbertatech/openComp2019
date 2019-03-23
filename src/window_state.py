@@ -88,7 +88,7 @@ class GameState (State):
         self.projectiles = []
 
         height = self.window.get_height()
-        self.player = rect(50,height*4/5,50,200,window.__surface__, 'yellow', 'soldier.png')
+        self.player = rect(50,height*4/5,80,200,window.__surface__, 'yellow', 'soldier.png')
 
     def run(self):
         self.window.clear()
@@ -156,7 +156,7 @@ class GameState (State):
 
     def spawn_bullet(self):
         height = self.window.get_height()
-        bullet = rect(100,height*4/5+25,30,5,self.window.__surface__, 'gray')
+        bullet = rect(100,height*4/5+70,30,5,self.window.__surface__, 'gray')
         self.projectiles.append(bullet)
         self.bullet_count -= 1
 
