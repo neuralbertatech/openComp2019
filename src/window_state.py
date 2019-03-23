@@ -188,7 +188,7 @@ class GameState (State):
             pygame.Rect.move_ip(projectile.rectangle, 15, 0)
             projectile.x += 15
 
-            if(pygame.Rect.collidepoint(projectile.rectangle, 1280, height*4/5+26)):
+            if(pygame.Rect.collidepoint(projectile.rectangle, 1280, height*4/5+67)):
                 self.projectiles.pop(0)
 
     def check_collision(self):
