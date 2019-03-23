@@ -22,7 +22,6 @@ class rect(primitive):
         pygame.draw.rect(self.screen, pygame.Color(self.colour), self.rectangle)
 
     def intersect(self, pos):
-        print(pos)
         x = pos[0]
         y = pos[1]
         if x - self.x < self.width and x >= self.x and \
