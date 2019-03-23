@@ -57,7 +57,8 @@ class MainMenuState (State):
         self.window.draw_string('Settings', width/2-12, height*2/5+20)
 
     def draw_bg(self):
-        self.window.set_bg_color('yellow')
+        color = (35,99,47,100)
+        self.window.__surface__.fill(color)
 
 class SettingsState (State):
     pass
@@ -69,15 +70,18 @@ class GameState (State):
         self.queue = deque([100,200,400, 500, 650])
         self.enemies = []
         self.projectiles = []
-        self.window.set_bg_color('black')
 
         height = self.window.get_height()
-        red = (255,0,0)
-        self.player = rect(50,height*4/5,50,200,window.__surface__, 'red')
+        red = (255,0,255)
+        self.player = rect(50,height*4/5,50,200,window.__surface__, 'yellow')
 
+    def draw_bg(self):
+        color = (35,99,47,100)
+        self.window.__surface__.fill(color)
 
     def run(self):
         self.window.clear()
+        self.draw_bg()
         self.generate_enemy()
         self.update_enemies()
         self.update_projectiles()
@@ -112,12 +116,12 @@ class GameState (State):
     def spawn_enemy(self):
         height = self.window.get_height()
         width = self.window.get_width()
-        enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'blue')
+        enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red')
         self.enemies.append(enemy)
 
     def spawn_bullet(self):
         height = self.window.get_height()
-        bullet = rect(100,height*4/5+25,30,5,self.window.__surface__, 'red')
+        bullet = rect(100,height*4/5+25,30,5,self.window.__surface__, 'pink')
         self.projectiles.append(bullet)
 
     def update_enemies(self):
