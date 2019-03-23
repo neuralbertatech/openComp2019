@@ -29,7 +29,6 @@ class MainMenuState (State):
         height = self.window.get_height()
         self.play_button = rect((width/2)-34, (height*2/5)-14, 68, 28, window.__surface__,'green')
         self.settings_button = rect((width/2)-68, (height*2/5)+20, 135, 28, window.__surface__,'green')
-        self.quit_button = rect((width/2)-68, (height*2/5)+50, 135, 28, window.__surface__,'green')
 
     def run(self):
         self.draw_buttons()
@@ -52,10 +51,6 @@ class MainMenuState (State):
                     # NOT IMPLEMENTED YET
                     return WindowState.settings
 
-                elif self.quit_button.intersect(pos):
-                    # Intentially break the game
-                    return
-
             # Pressed return key, start game
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 self.draw_bg()
@@ -69,9 +64,8 @@ class MainMenuState (State):
         self.play_button.draw()
         self.settings_button.draw()
         self.window.set_font_size(40)
-        self.window.draw_string('Play',(width/2)-34, (height*2/5)-14, pygame.Color(0,0,0,0))
-        self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,0))
-        self.window.draw_string('Quit', (width/2)-35, (height*2/5)+50, pygame.Color(0,0,0,0))
+        self.window.draw_string('Play',(width/2)-34, (height*2/5)-14, pygame.Color(0,0,0,100))
+        self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,100))
 
     def draw_bg(self):
         color = (35,99,47,100)
@@ -86,7 +80,7 @@ class GameState (State):
         self.frame_bullet = 0;
         self.frame_enemy = 0;
         self.fire_rate = 100
-        self.queue = deque([100,200,400,500,650])
+        self.queue = deque([100,200,400, 500, 650])
         self.bullet_count = 1000
         self.enemies = []
         self.enemiesStrength = []
@@ -94,8 +88,7 @@ class GameState (State):
         self.projectiles = []
 
         height = self.window.get_height()
-        self.player = rect(50,height*4/5,50,200,window.__surface__, 'yellow')
-        self.player.draw()
+        self.player = rect(50,height*4/5,80,200,window.__surface__, 'yellow', 'soldier.png')
 
     def run(self):
         self.window.clear()
@@ -158,13 +151,13 @@ class GameState (State):
         height = self.window.get_height()
         width = self.window.get_width()
 
-        enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red')
+        enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
         self.enemies.append(enemy)
         self.enemiesStrength.append(strength)
 
     def spawn_bullet(self):
         height = self.window.get_height()
-        bullet = rect(100,height*4/5+25,30,5,self.window.__surface__, 'gray')
+        bullet = rect(100,height*4/5+67,30,5,self.window.__surface__, 'gray', 'bullet.png')
         self.projectiles.append(bullet)
         self.bullet_count -= 1
 
@@ -173,6 +166,7 @@ class GameState (State):
         width = self.window.get_width()
         for enemy in self.enemies:
             pygame.Rect.move_ip(enemy.rectangle, -1, 0)
+            enemy.x -= 1
 
             self.window.draw_string('Next Enemy HP: ' + str(self.enemiesStrength[0]),  width - self.window.get_string_width('Next Enemy HP: ' + str(self.enemiesStrength[0])), 0, pygame.Color(35,99,47,100))
 
@@ -184,6 +178,7 @@ class GameState (State):
 
         for projectile in self.projectiles:
             pygame.Rect.move_ip(projectile.rectangle, 15, 0)
+            projectile.x += 15
 
             if(pygame.Rect.collidepoint(projectile.rectangle, 1280, height*4/5+26)):
                 self.projectiles.pop(0)
