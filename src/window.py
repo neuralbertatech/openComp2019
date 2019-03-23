@@ -117,7 +117,7 @@ class Window:
 
         return self.__surface__
 
-    def draw_string(self, string, x, y):
+    def draw_string(self, string, x, y, bg):
         # Draw a string in the window using the current font and
         # colors
         # - self is the Window
@@ -127,7 +127,7 @@ class Window:
         # - y is the int y coord of the upper left corner of the
         #   string in the window
 
-        text_image = self.__font__.render(string, True, Color(self.__font_color__), Color(self.__bg_color__))
+        text_image = self.__font__.render(string, True, Color(self.__font_color__), bg)
         self.__surface__.blit(text_image, (x, y))
         if self.__auto_update__:
             text_rect = Rect((x, y), text_image.get_size())

@@ -63,8 +63,8 @@ class MainMenuState (State):
         self.play_button.draw()
         self.settings_button.draw()
         self.window.set_font_size(40)
-        self.window.draw_string('Play',(width/2)-34, (height*2/5)-14)
-        self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20)
+        self.window.draw_string('Play',(width/2)-34, (height*2/5)-14, pygame.Color(0,0,0,100))
+        self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,100))
 
     def draw_bg(self):
         color = (35,99,47,100)
@@ -76,7 +76,8 @@ class SettingsState (State):
 class GameState (State):
     def __init__(self, window):
         self.window = window
-        self.frame = 0;
+        self.frame_bullet = 0;
+        self.frame_enemy = 0;
         self.fire_rate = 100
         self.queue = deque([100,200,400, 500, 650])
         self.bullet_count = 1000
@@ -93,12 +94,11 @@ class GameState (State):
         self.draw_bg()
         self.print_bullet_count()
         self.draw()
-        #self.generate_enemy()
+        self.generate_enemy()
         self.update_enemies()
         self.update_projectiles()
         self.check_collision()
         self.fire_bullet()
-        self.frame += 1
         time.sleep(0.0001) # set game velocity by pausing
 
     def draw_bg(self):
@@ -106,15 +106,15 @@ class GameState (State):
         self.window.__surface__.fill(color)
 
     def print_bullet_count(self):
-        self.window.draw_string('Bullets: ' + str(self.bullet_count), 0, 0)
+        self.window.draw_string('Bullets: ' + str(self.bullet_count), 0, 0, pygame.Color(35,99,47,100))
 
 
     def fire_bullet(self):
-        if self.fire_rate <= self.frame:
+        if self.fire_rate <= self.frame_bullet:
             self.spawn_bullet()
-            self.frame = 0
+            self.frame_bullet = 0
         else:
-            self.frame += 1
+            self.frame_bullet += 1
 
     def next(self, events):
         for event in events:
@@ -137,9 +137,11 @@ class GameState (State):
 
 
     def generate_enemy(self):
-        while(self.queue[0] < self.frame):
-            self.queue.popleft()
-            self.spawn_enemy(1)
+        if self.frame_enemy > 60:
+            self.spawn_enemy()
+            self.frame_enemy = 0
+        else:
+            self.frame_enemy += 1
 
 
     def spawn_enemy(self):
@@ -148,7 +150,7 @@ class GameState (State):
 
         enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red')
         self.enemies.append(enemy) # Convert to Tuple
-        self.enemiesStrength.append(strength)
+        #self.enemiesStrength.append(strength)
 
     def spawn_bullet(self):
         height = self.window.get_height()
@@ -164,7 +166,7 @@ class GameState (State):
         height = self.window.get_height()
 
         for projectile in self.projectiles:
-            pygame.Rect.move_ip(projectile.rectangle, 10, 0)
+            pygame.Rect.move_ip(projectile.rectangle, 15, 0)
 
             if(pygame.Rect.collidepoint(projectile.rectangle, 1280, height*4/5+26)):
                 self.projectiles.pop(0)
@@ -176,5 +178,4 @@ class GameState (State):
                 self.enemies.pop(0)
 
         except Exception as e:
-                #print("BROKE {}".format(e))
                 pass
