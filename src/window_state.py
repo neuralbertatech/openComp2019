@@ -25,7 +25,8 @@ class MainMenuState (State):
         green = (0,255,0)
         width = self.window.get_width()
         height = self.window.get_height()
-        self.play_button = rect(width/2,height*2/5,30,15,window.__surface__,'green')
+        self.play_button = rect((width/2)-34, (height*2/5)-14, 68, 28, window.__surface__,'green')
+        self.settings_button = rect((width/2)-68, (height*2/5)+20, 135, 28, window.__surface__,'green')
 
     def run(self):
         self.draw_buttons()
@@ -33,16 +34,22 @@ class MainMenuState (State):
 
     def next(self, events):
         for event in events:
+            # Clicked Mouse
             if event.type == pygame.MOUSEBUTTONUP:
                 pos = pygame.mouse.get_pos()
 
+                # Clicked on Play Button
                 if self.play_button.intersect(pos):
-                    #print("State: {}".format(WindowState.game))
                     self.draw_bg()
                     return WindowState.game
 
-                #elif self.settings_button.clicked(pos):
-                #    return WindowState.settings
+                # Clicked on Settings Button
+                elif self.settings_button.intersect(pos):
+                    self.draw_bg()
+                    # NOT IMPLEMENTED YET
+                    return WindowState.settings
+
+            # Pressed return key, start game
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 self.draw_bg()
                 return WindowState.game
@@ -53,9 +60,10 @@ class MainMenuState (State):
         width = self.window.get_width()
         height = self.window.get_height()
         self.play_button.draw()
+        self.settings_button.draw()
         self.window.set_font_size(40)
-        self.window.draw_string('Play', width/2, height*2/5)
-        self.window.draw_string('Settings', width/2-12, height*2/5+20)
+        self.window.draw_string('Play',(width/2)-34, (height*2/5)-14)
+        self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20)
 
     def draw_bg(self):
         color = (35,99,47,100)
@@ -72,6 +80,7 @@ class GameState (State):
         self.queue = deque([100,200,400, 500, 650])
         self.bullet_count = 1000
         self.enemies = []
+        self.enemiesStrength = []
         self.projectiles = []
 
         height = self.window.get_height()
@@ -122,22 +131,24 @@ class GameState (State):
 
         while(self.queue[0] < self.frame):
             self.queue.popleft()
-            self.spawn_enemy()
+            self.spawn_enemy(1)
 
 
     def handle_enemy_queue(self):
         pass
 
 
-    def spawn_enemy(self):
+    def spawn_enemy(self, strength):
         height = self.window.get_height()
         width = self.window.get_width()
+
         enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red')
-        self.enemies.append(enemy)
+        self.enemies.append(enemy) # Convert to Tuple
+        self.enemiesStrength.append(strength)
 
     def spawn_bullet(self):
         height = self.window.get_height()
-        bullet = rect(100,height*4/5+25,30,5,self.window.__surface__, 'pink')
+        bullet = rect(100,height*4/5+25,30,5,self.window.__surface__, 'gray')
         self.projectiles.append(bullet)
         self.bullet_count -= 1
 
