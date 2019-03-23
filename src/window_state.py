@@ -94,8 +94,12 @@ class GameState (State):
         self.projectiles = []
 
         height = self.window.get_height()
+<<<<<<< HEAD
         self.player = rect(50,height*4/5,50,200,window.__surface__, 'yellow')
         self.player.draw()
+=======
+        self.player = rect(50,height*4/5,50,200,window.__surface__, 'yellow', 'soldier.png')
+>>>>>>> 547c76a7ca3115de16db86253746a22867d4d129
 
     def run(self):
         self.window.clear()
@@ -142,7 +146,6 @@ class GameState (State):
         self.player.draw()
 
         self.window.draw_string('Time: ' + str(self.score),  self.window.get_width() - self.window.get_string_width('Time: ' + str(self.score)), 0, pygame.Color(35,99,47,100))
-
 
 
 
