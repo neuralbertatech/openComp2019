@@ -86,7 +86,6 @@ class GameState (State):
         self.projectiles = []
 
         height = self.window.get_height()
-        red = (255,0,255)
         self.player = rect(50,height*4/5,50,200,window.__surface__, 'yellow')
 
     def run(self):
@@ -127,6 +126,8 @@ class GameState (State):
                         self.fire_rate += 10
 
         return WindowState.game
+
+
     def draw(self):
         for enemy in self.enemies:
             enemy.draw()
@@ -137,17 +138,11 @@ class GameState (State):
 
 
     def generate_enemy(self):
-<<<<<<< HEAD
-        while(self.queue[0] < self.frame):
-            self.queue.popleft()
-            self.spawn_enemy(5)
-=======
         if self.frame_enemy > 60:
-            self.spawn_enemy()
+            self.spawn_enemy(5)
             self.frame_enemy = 0
         else:
             self.frame_enemy += 1
->>>>>>> 96f49d818afe18dbaca07832598b4608a5ffc9d1
 
 
     def spawn_enemy(self, strength):
@@ -155,13 +150,8 @@ class GameState (State):
         width = self.window.get_width()
 
         enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red')
-<<<<<<< HEAD
         self.enemies.append(enemy)
         self.enemiesStrength.append(strength)
-=======
-        self.enemies.append(enemy) # Convert to Tuple
-        #self.enemiesStrength.append(strength)
->>>>>>> 96f49d818afe18dbaca07832598b4608a5ffc9d1
 
     def spawn_bullet(self):
         height = self.window.get_height()
