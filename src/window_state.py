@@ -64,6 +64,7 @@ class GameState (State):
     def __init__(self, window):
         self.window = window
         self.frame = 0;
+        self.fire_rate = 50
         self.queue = deque([100,200,400, 500, 650])
         self.enemies = []
         self.projectiles = []
@@ -84,13 +85,16 @@ class GameState (State):
         self.frame += 1
         self.window.update()
 
+    def fire_bullet(self):
+        if self.fire_rate == self.frame:
+            self.spawn_bullet()
+            self.frame = 0
 
     def next(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self.spawn_bullet()
-
+                    pass
 
         return WindowState.game
 
