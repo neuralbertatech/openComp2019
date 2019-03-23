@@ -52,10 +52,11 @@ class MainMenuState (State):
         width = self.window.get_width()
         height = self.window.get_height()
         self.play_button.draw()
+        self.window.set_font_size(40)
         self.window.draw_string('Play', width/2, height*2/5)
 
     def draw_bg(self):
-        self.window.set_bg_color((255, 255, 255, 255))
+        self.window.set_bg_color('black')
 
 class SettingsState (State):
     pass
@@ -71,12 +72,14 @@ class GameState (State):
         self.window.set_bg_color('black')
         self.bullet_count = 1000
 
+        self.window.set_font_size(60)
+
         height = self.window.get_height()
         red = (255,0,0)
         self.player = rect(50,height*4/5,50,200,window.__surface__, 'red')
 
     def print_bullet_count(self):
-        self.window.draw_string(str(self.bullet_count), 0, 0)
+        self.window.draw_string('Bullets: ' + str(self.bullet_count), 0, 0)
 
     def run(self):
         self.window.clear()
@@ -85,6 +88,7 @@ class GameState (State):
         self.update_projectiles()
         self.check_collision()
         self.fire_bullet()
+        self.print_bullet_count()
         self.player.draw()
         self.frame += 1
         self.window.update()
