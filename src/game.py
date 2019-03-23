@@ -17,6 +17,8 @@ class Game:
 
         def run(self):
             clock = pygame.time.Clock()
+            pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            
             while(1):
                 events = pygame.event.get()
                 for event in events:

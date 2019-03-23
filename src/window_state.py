@@ -139,15 +139,15 @@ class GameState (State):
     def generate_enemy(self):
         while(self.queue[0] < self.frame):
             self.queue.popleft()
-            self.spawn_enemy(1)
+            self.spawn_enemy(5)
 
 
-    def spawn_enemy(self):
+    def spawn_enemy(self, strength):
         height = self.window.get_height()
         width = self.window.get_width()
 
         enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red')
-        self.enemies.append(enemy) # Convert to Tuple
+        self.enemies.append(enemy)
         self.enemiesStrength.append(strength)
 
     def spawn_bullet(self):
@@ -173,7 +173,11 @@ class GameState (State):
         try:
             if( pygame.Rect.colliderect(self.enemies[0].rectangle, self.projectiles[0].rectangle) ):
                 self.projectiles.pop(0)
-                self.enemies.pop(0)
+                if(enemiesStrength[0] == 0):
+                    self.enemies.pop(0)
+                    self.enemiesStrength.pop(0)
+                else:
+                    self.enemiesStrength[0] -= 1
 
         except Exception as e:
                 #print("BROKE {}".format(e))
