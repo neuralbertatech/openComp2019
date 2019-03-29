@@ -5,6 +5,7 @@ from time import sleep
 from pylsl import StreamInlet, resolve_byprop
 from threading import Thread
 import mne
+import math
 
 # Enough for 1 sec at 256 Hz
 BUFFER = 256
@@ -20,6 +21,14 @@ print("Start aquiring data")
 stream = streams[0]
 
 inlet = StreamInlet(stream, max_chunklen=BUFFER)
+
+
+def alpha(data):
+    #data.filter(8, 12, n_jobs=1, l_trans_bandwidth=1, h_trans_bandwidth=1, fir_design='firwin')
+    #data.apply_hilbert(n_jobs=1, envelope=False)
+    #epochs = mne.Epochs(data, events, 1, -1.0, 3.0, baseline=None, reject=dict(grad=4000e-13, eog=350e-6))
+    return np.average([math.sqrt(part.real**2 + part.imag**2) for part in data])
+
 
 class CircularBuffer:
     def __init__(self, chunks):
@@ -55,9 +64,10 @@ while True:
         # Check so that the buffer is filled before any filtering
         if count >= chunks:
             channels = list([0])
-            lower_freq = 5
-            higher_freq = 15
+            lower_freq = 8
+            higher_freq = 12
             filtered_data = mne.filter.filter_data(buf.window, 256, lower_freq, higher_freq, filter_length=256*chunks-1)
-            print(filtered_data)
+            for channel in filtered_data:
+                print(alpha(channel))
 
         count += 1
