@@ -11,7 +11,7 @@ class Game:
             self.window_manager = WindowManager(self.window)
 
             # Set the window icon
-            window_icon = pygame.image.load("NeurAlbertaTechLogo.png")
+            window_icon = pygame.image.load("neuralbertatech_logo.png")
             pygame.display.set_icon(window_icon)
 
 

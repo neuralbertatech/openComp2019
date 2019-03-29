@@ -3,6 +3,7 @@ from pygame.display import set_caption, set_mode, update
 from pygame.font import SysFont, Font
 from pygame.event import poll
 from pygame.key import get_pressed, name
+import pygame as pygame
 
 
 class Window:
@@ -89,6 +90,11 @@ class Window:
 
         return self.__bg_color__
 
+    def set_bg_image(self, image_png, width, height):
+        image = pygame.image.load(image_png)
+        image = pygame.transform.scale(image, (self.get_width(), self.get_height()))
+        self.__surface__.blit(image, [0,0])
+    
     def get_width(self):
         # Return the int pixel width of the window's drawable
         # interior surface

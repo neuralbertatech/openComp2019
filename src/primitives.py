@@ -2,10 +2,10 @@ import pygame
 
 class primitive:
     def draw(self):
-        assert 0;
+        assert 0
 
     def intersect(self, x, y):
-        assert 0;
+        assert 0
 
 class rect(primitive):
     def __init__(self, x, y, w, h, screen, colour, content = None):
@@ -22,6 +22,8 @@ class rect(primitive):
     def draw(self):
         if self.content == None:
             pygame.draw.rect(self.screen, pygame.Color(self.colour), self.rectangle)
+        elif  not isinstance(self.content,str):
+             self.screen.blit(self.content, (self.x, self.y))
         else:
             self.screen.blit(pygame.image.load(self.content), (self.x, self.y))
 

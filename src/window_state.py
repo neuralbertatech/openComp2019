@@ -4,6 +4,7 @@ from collections import deque
 import pygame
 import time
 import random
+from demon_sprite import DemonSprite
 
 class WindowState:
     def __init__(self, state_str, state):
@@ -73,6 +74,7 @@ class MainMenuState (State):
         self.window.draw_string('Play',(width/2)-34, (height*2/5)-14, pygame.Color(0,0,0,100))
         self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,100))
         self.window.draw_string('Quit', (width/2)-38, (height*2/5)+50, pygame.Color(0,0,0,100))
+        
 
     def draw_bg(self):
         color = (35,99,47,100)
@@ -84,8 +86,8 @@ class SettingsState (State):
 class GameState (State):
     def __init__(self, window):
         self.window = window
-        self.frame_bullet = 0;
-        self.frame_enemy = 0;
+        self.frame_bullet = 0
+        self.frame_enemy = 0
         self.fire_rate = 100
         self.queue = deque([100,200,400, 500, 650])
         self.bullet_count = 1000
@@ -130,12 +132,12 @@ class GameState (State):
 
     def draw(self):
         color = (35,99,47,100)
-        self.window.__surface__.fill(color)
+        self.window.set_bg_image('cyberpunk-street.png', self.window.get_width, self.window.get_height)
 
         self.window.draw_string('Bullets: ' + str(self.bullet_count), 0, 0, pygame.Color(35,99,47,100))
 
         for enemy in self.enemies:
-            enemy.draw()
+            enemy.rect.draw()
         for projectile in self.projectiles:
             projectile.draw()
 
@@ -148,7 +150,7 @@ class GameState (State):
 
     def generate_enemy(self):
         if random.randint(-2000, 0)+self.frame_enemy > 60 and self.frame_enemy > 60:
-            self.spawn_enemy(5)
+            self.spawn_enemy(random.randint(1,5))
             self.frame_enemy = 0
         else:
             self.frame_enemy += 1
@@ -157,8 +159,17 @@ class GameState (State):
     def spawn_enemy(self, strength):
         height = self.window.get_height()
         width = self.window.get_width()
-
-        enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
+    
+        # if strength == 1:
+        #     enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
+        # elif strength == 2:
+        enemy = DemonSprite(width-50,height*4/5,50,200,self.window.__surface__, 'red')
+        # elif strength == 3:
+        #     enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
+        # elif strength == 4:
+        #     enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
+        # else :
+        #     enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
         self.enemies.append(enemy)
         self.enemiesStrength.append(strength)
 
@@ -172,8 +183,8 @@ class GameState (State):
         height = self.window.get_height()
         width = self.window.get_width()
         for enemy in self.enemies:
-            pygame.Rect.move_ip(enemy.rectangle, -1, 0)
-            enemy.x -= 1
+            pygame.Rect.move_ip(enemy.rect.rectangle, -1, 0)
+            enemy.update()
 
             self.window.draw_string('Next Enemy HP: ' + str(self.enemiesStrength[0] + 1),  width - self.window.get_string_width('Next Enemy HP: ' + str(self.enemiesStrength[0] + 1)), 0, pygame.Color(35,99,47,100))
 
