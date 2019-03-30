@@ -43,3 +43,30 @@ class DemonSprite(pygame.sprite.Sprite):
             self.rect.y += 9
 
         self.rect.set_content(self.image)
+
+class Death(pygame.sprite.Sprite):
+    def __init__(self, rectangle):
+        super(Death, self).__init__()
+        rectangle.content = None
+        self.rect = rectangle
+        self.index = 0
+        self.images = []
+        self.images.append(pygame.image.load('assets/explosion1.png'))
+        self.images.append(pygame.image.load('assets/explosion2.png'))
+        self.images.append(pygame.image.load('assets/explosion3.png'))
+        self.images.append(pygame.image.load('assets/explosion4.png'))
+        self.images.append(pygame.image.load('assets/explosion5.png'))
+        self.images.append(pygame.image.load('assets/explosion6.png'))
+
+        self.image = self.images[self.index]
+
+        self.rect.x += 50
+        self.rect.y += 100
+
+        self.sprite_rate = 0
+
+    def update(self):
+        self.index += 1
+
+        self.image = self.images[self.index]
+        self.rect.set_content(self.image)

@@ -21,7 +21,7 @@ class rect(primitive):
 
     def draw(self):
         if self.content == None:
-            pygame.draw.rect(self.screen, pygame.Color(self.colour), self.rectangle)
+            pass
         elif  not isinstance(self.content,str):
              self.screen.blit(self.content, (self.x, self.y))
         else:

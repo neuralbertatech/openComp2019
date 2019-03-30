@@ -5,6 +5,7 @@ import pygame
 import time
 import random
 from demon_sprite import DemonSprite
+from demon_sprite import Death
 
 class WindowState:
     def __init__(self, state_str, state):
@@ -100,6 +101,7 @@ class GameState (State):
         self.enemiesStrength = []
         self.score = 0
         self.projectiles = []
+        self.dead_enemies = []
 
         height = self.window.get_height()
         self.player = rect(50,height*4/5,80,200,window.__surface__, 'yellow', 'soldier.png')
@@ -143,6 +145,17 @@ class GameState (State):
 
         self.window.draw_string('Bullets: ' + str(self.bullet_count), 0, 0, pygame.Color(5,44,70,100))
 
+        for dead_enemy in self.dead_enemies:
+            dead_enemy.rect.draw()
+            if dead_enemy.sprite_rate >= 3:
+                dead_enemy.update()
+                dead_enemy.sprite_rate = 0
+            else:
+                dead_enemy.sprite_rate += 1
+
+            if dead_enemy.index >= 5:
+                self.dead_enemies.pop(0)
+                
         for enemy in self.enemies:
             enemy.rect.draw()
         for projectile in self.projectiles:
@@ -151,6 +164,7 @@ class GameState (State):
         self.player.draw()
 
         self.window.draw_string('Time: ' + str(self.score),  self.window.get_width() - self.window.get_string_width('Time: ' + str(self.score)), 30, pygame.Color(5,44,70,100))
+
 
 
     def generate_enemy(self):
@@ -246,10 +260,11 @@ class GameState (State):
                 self.projectiles.pop(0)
 
                 if(self.enemiesStrength[0] == 0):
+                    self.dead_enemies.append(Death(self.enemies[0].rect))
                     self.enemies.pop(0)
                     self.enemiesStrength.pop(0)
                 else:
                     self.enemiesStrength[0] -= 1
-
+                    enemy_rect = False
         except Exception as e:
                 pass
