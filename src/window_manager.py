@@ -1,4 +1,4 @@
-from window_state import WindowState, MainMenuState, GameState
+from window_state import WindowState, MainMenuState, GameState, EndGameState
 
 
 class WindowManager:
@@ -7,8 +7,9 @@ class WindowManager:
 
         # Register the window states
         WindowState.main_menu = WindowState('main_menu', MainMenuState(self.window))
-        WindowState.settings = WindowState('settings', None)
+        WindowState.settings = WindowState('settings', None) #SettingsState(self.window))
         WindowState.game = WindowState('game', GameState(self.window))
+        WindowState.end_game = WindowState('end_game', EndGameState(self.window))
 
         # Start on the main_menu state
         self.current_state = WindowState.main_menu

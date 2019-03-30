@@ -25,7 +25,6 @@ class MainMenuState (State):
     def __init__(self, window):
         self.window = window
 
-        green = (0,255,0)
         width = self.window.get_width()
         height = self.window.get_height()
         self.play_button = rect((width/2)-34, (height*2/5)-14, 68, 28, window.__surface__,'green')
@@ -34,6 +33,7 @@ class MainMenuState (State):
 
 
     def run(self):
+        self.draw_bg()
         self.draw_buttons()
         self.window.update()
 
@@ -47,6 +47,8 @@ class MainMenuState (State):
                 # Clicked on Play Button
                 if self.play_button.intersect(pos):
                     self.draw_bg()
+
+                    WindowState.game.state.__init__(self.window)
                     return WindowState.game
 
                 # Clicked on Settings Button
@@ -63,6 +65,7 @@ class MainMenuState (State):
             # Pressed return key, start game
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 self.draw_bg()
+                WindowState.game.state.__init__(self.window)
                 return WindowState.game
 
         return WindowState.main_menu
@@ -80,12 +83,17 @@ class MainMenuState (State):
 
 
     def draw_bg(self):
-        color = (35,99,47,100)
+        color = (0,0,0,255)
         self.window.__surface__.fill(color)
 
 
 class SettingsState (State):
-    pass
+    def __init__(self, window):
+        self.window = window
+
+    def draw(self):
+        width = self.window.get_width()
+        height = self.window.get_height()
 
 
 class GameState (State):
@@ -99,7 +107,10 @@ class GameState (State):
         self.enemies = []
         self.enemiesStrength = []
         self.score = 0
+        self.final_score = 0
+        self.start_time = pygame.time.get_ticks() // 1000
         self.projectiles = []
+        self.game_over = False
 
         height = self.window.get_height()
         self.player = rect(50,height*4/5,80,200,window.__surface__, 'yellow', 'soldier.png')
@@ -112,7 +123,7 @@ class GameState (State):
         self.update_projectiles()
         self.check_collision()
         self.fire_bullet()
-        self.score = pygame.time.get_ticks() // 1000
+        self.score = (pygame.time.get_ticks() // 1000) - self.start_time
         time.sleep(0.0001) # set game velocity by pausing
 
 
@@ -134,11 +145,15 @@ class GameState (State):
                     if self.fire_rate < 100:
                         self.fire_rate += 10
 
+        if self.game_over:
+            self.final_score = self.score
+            return WindowState.end_game
+
         return WindowState.game
 
 
     def draw(self):
-        color = (35,99,47,100)
+        color = (35,99,47,255)
         self.window.set_bg_image('cyberpunk-street.png', self.window.get_width, self.window.get_height)
 
         self.window.draw_string('Bullets: ' + str(self.bullet_count), 0, 0, pygame.Color(5,44,70,100))
@@ -186,21 +201,9 @@ class GameState (State):
         self.bullet_count -= 1
 
 
-    def end_game(self):
-        # Define the window variables
-        height = self.window.get_height()
-        width = self.window.get_width()
-
-        # Fill Screen
-        color = (35,0,0,100)
+    def draw_bg(self):
+        color = (35,99,47,255)
         self.window.__surface__.fill(color)
-
-        # Display End Message
-        self.main_menu_button = rect((width/2)-38, (height*2/5)+50, 135, 28, window.__surface__,'green')
-
-        self.window.draw_string('You died.',(width/2)-34, (height*2/5)-14, pygame.Color(0,0,0,100))
-        self.window.draw_string('Game Over', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,100))
-        self.window.draw_string('Main Menu', (width/2)-38, (height*2/5)+70, pygame.Color(0,0,0,100))
 
 
     def update_enemies(self):
@@ -222,7 +225,7 @@ class GameState (State):
 
             # Check if the player is hit by an enemy and execute the end condition
             if(pygame.Rect.colliderect(enemy.rect.rectangle, self.player.rectangle)):
-                self.end_game()
+                self.game_over = True
 
         # Display an empty amount of HP if there are no enemies
         if(len(self.enemies) == 0):
@@ -253,3 +256,55 @@ class GameState (State):
 
         except Exception as e:
                 pass
+
+
+class EndGameState (State):
+    def __init__(self, window):
+        self.window = window
+
+        width = self.window.get_width()
+        height = self.window.get_height()
+        self.main_menu_button = rect((width/2)-75, (height*2/5)+100, 150, 28, window.__surface__,'green')
+
+
+    def run(self):
+        self.draw_bg()
+        self.draw()
+        self.window.update()
+
+
+    def next(self, events):
+        for event in events:
+            # Clicked Mouse
+            if event.type == pygame.MOUSEBUTTONUP:
+                pos = pygame.mouse.get_pos()
+
+                # Clicked on main menu button
+                if self.main_menu_button.intersect(pos):
+                    self.draw_bg()
+                    return WindowState.main_menu
+
+
+            # Pressed return key, end game
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                self.draw_bg()
+                return WindowState.main_menu
+
+        return WindowState.end_game
+
+
+    def draw(self):
+        width = self.window.get_width()
+        height = self.window.get_height()
+        self.main_menu_button.draw()
+        self.window.set_font_size(40)
+        self.window.draw_string('GAME OVER',(width/2)-90, (height*2/5)-14, pygame.Color(35,0,0,0))
+        self.window.draw_string('You died.', (width/2)-60, (height*2/5)+20, pygame.Color(35,0,0,0))
+
+        self.window.draw_string('You survived ' + str(WindowState.game.state.final_score) + ' seconds',  (width/2) - (self.window.get_string_width('You survived ' + str(WindowState.game.state.final_score) + ' seconds'))/2, (height*2/5)+50, pygame.Color(35,0,0,0))
+
+        self.window.draw_string('Main Menu', (width/2)-75, (height*2/5)+100, pygame.Color(35,0,0,0))
+
+    def draw_bg(self):
+        color = (35,0,0,100)
+        self.window.__surface__.fill(color)
