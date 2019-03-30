@@ -103,6 +103,16 @@ class GameState (State):
         self.projectiles = []
         self.dead_enemies = []
 
+        self.soldier = []
+        self.soldier.append(pygame.image.load('assets/soldier1.png'))
+        self.soldier.append(pygame.image.load('assets/soldier2.png'))
+        self.soldier.append(pygame.image.load('assets/soldier3.png'))
+        self.soldier.append(pygame.image.load('assets/soldier4.png'))
+        self.soldier.append(pygame.image.load('assets/soldier5.png'))
+        self.soldier_index = 0
+
+        self.firing = False
+
         height = self.window.get_height()
         self.player = rect(50,height*4/5,80,200,window.__surface__, 'yellow', 'soldier.png')
 
@@ -155,14 +165,22 @@ class GameState (State):
 
             if dead_enemy.index >= 5:
                 self.dead_enemies.pop(0)
-                
+
         for enemy in self.enemies:
             enemy.rect.draw()
         for projectile in self.projectiles:
             projectile.draw()
 
-        self.player.draw()
-
+        if self.firing == True:
+            self.player.set_content(self.soldier[self.soldier_index])
+            self.player.draw()
+            if self.soldier_index >= 4:
+                self.soldier_index = 0
+                self.firing = False
+            else:
+                self.soldier_index += 1
+        else:
+            self.player.draw()
         self.window.draw_string('Time: ' + str(self.score),  self.window.get_width() - self.window.get_string_width('Time: ' + str(self.score)), 30, pygame.Color(5,44,70,100))
 
 
@@ -195,9 +213,10 @@ class GameState (State):
 
     def spawn_bullet(self):
         height = self.window.get_height()
-        bullet = rect(100,height*4/5+67,30,5,self.window.__surface__, 'gray', 'bullet.png')
+        bullet = rect(100,height*4/5+57,30,5,self.window.__surface__, 'gray', 'bullet.png')
         self.projectiles.append(bullet)
         self.bullet_count -= 1
+        self.firing = True
 
 
     def end_game(self):
