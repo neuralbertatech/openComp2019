@@ -171,7 +171,7 @@ class GameState (State):
         # if strength == 1:
         #     enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
         # elif strength == 2:
-        enemy = DemonSprite(width-200,height*3/5,50,200,self.window.__surface__, 'red')
+        enemy = DemonSprite(width-200,height*3/5,200,400,self.window.__surface__, 'red')
         # elif strength == 3:
         #     enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
         # elif strength == 4:
