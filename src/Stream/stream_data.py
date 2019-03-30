@@ -50,7 +50,10 @@ class CircularBuffer:
 times = []
 count = 0
 chunks = 3
+ave_len = 10
+ave = [0.0, 0.0]
 buf = CircularBuffer(chunks)
+
 
 while True:
     # Sample is a 2d array of [ [channel_i]*5 ] * BUFFER
@@ -66,8 +69,20 @@ while True:
             channels = list([0])
             lower_freq = 8
             higher_freq = 12
-            filtered_data = mne.filter.filter_data(buf.window, 256, lower_freq, higher_freq, filter_length=256*chunks-1)
-            for channel in filtered_data:
-                print(alpha(channel))
+            filtered_data = mne.filter.filter_data(buf.window, 256, lower_freq, higher_freq, filter_length=256*chunks-1, fir_design='firwin')
+            #for channel in filtered_data:
+            #    print(alpha(channel))
+            if(count < chunks+ave_len):
+                ave[0] += alpha(filtered_data[1]) * (1./ave_len)
+                ave[1] += alpha(filtered_data[2]) * (1./ave_len)
+
+            elif(alpha(filtered_data[2]) > ave[1]*0.90):
+                if(alpha(filtered_data[1]) > ave[0]*1.05):
+                    print('Noise')
+                else:
+                    print('Yes')
+
+            else:
+                print('No')
 
         count += 1
