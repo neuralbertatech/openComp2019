@@ -14,7 +14,6 @@ class DemonSprite(pygame.sprite.Sprite):
         self.images.append(pygame.image.load('assets/demon6.png'))
 
 
-
         #index value to get the image from the array
         #initially it is 0
         self.index = 0
