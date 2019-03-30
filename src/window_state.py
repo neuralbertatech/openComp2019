@@ -74,7 +74,7 @@ class MainMenuState (State):
         self.window.draw_string('Play',(width/2)-34, (height*2/5)-14, pygame.Color(0,0,0,100))
         self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,100))
         self.window.draw_string('Quit', (width/2)-38, (height*2/5)+50, pygame.Color(0,0,0,100))
-        
+
 
     def draw_bg(self):
         color = (35,99,47,100)
@@ -134,7 +134,7 @@ class GameState (State):
         color = (35,99,47,100)
         self.window.set_bg_image('cyberpunk-street.png', self.window.get_width, self.window.get_height)
 
-        self.window.draw_string('Bullets: ' + str(self.bullet_count), 0, 0, pygame.Color(35,99,47,100))
+        self.window.draw_string('Bullets: ' + str(self.bullet_count), 0, 0, pygame.Color(5,44,70,100))
 
         for enemy in self.enemies:
             enemy.rect.draw()
@@ -143,7 +143,7 @@ class GameState (State):
 
         self.player.draw()
 
-        self.window.draw_string('Time: ' + str(self.score),  self.window.get_width() - self.window.get_string_width('Time: ' + str(self.score)), 30, pygame.Color(35,99,47,100))
+        self.window.draw_string('Time: ' + str(self.score),  self.window.get_width() - self.window.get_string_width('Time: ' + str(self.score)), 30, pygame.Color(5,44,70,100))
 
 
 
@@ -159,7 +159,7 @@ class GameState (State):
     def spawn_enemy(self, strength):
         height = self.window.get_height()
         width = self.window.get_width()
-    
+
         # if strength == 1:
         #     enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
         # elif strength == 2:
@@ -186,11 +186,12 @@ class GameState (State):
             pygame.Rect.move_ip(enemy.rect.rectangle, -1, 0)
             enemy.update()
 
-            self.window.draw_string('Next Enemy HP: ' + str(self.enemiesStrength[0] + 1),  width - self.window.get_string_width('Next Enemy HP: ' + str(self.enemiesStrength[0] + 1)), 0, pygame.Color(35,99,47,100))
+            self.window.draw_string('Next Enemy HP: ' + str(self.enemiesStrength[0] + 1),  width - self.window.get_string_width('Next Enemy HP: ' + str(self.enemiesStrength[0] + 1)), 0, pygame.Color(5,44,70,100))
 
         # Display an empty amount of HP if
         if(len(self.enemies) == 0):
-            self.window.draw_string('Next Enemy HP:  ',  width - self.window.get_string_width('Next Enemy HP:  '), 0, pygame.Color(35,99,47,100))
+            self.window.draw_string('Next Enemy HP:  ',  width - self.window.get_string_width('Next Enemy HP:  '), 0, pygame.Color(5,44,70,100))
+
 
     def update_projectiles(self):
         height = self.window.get_height()
