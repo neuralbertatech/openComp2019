@@ -20,7 +20,6 @@ class rect(primitive):
         self.content = content
 
     def draw(self):
-        pygame.draw.rect(self.screen, pygame.Color(self.colour), self.rectangle)
         if self.content == None:
             pygame.draw.rect(self.screen, pygame.Color(self.colour), self.rectangle)
         elif  not isinstance(self.content,str):
