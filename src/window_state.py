@@ -116,15 +116,6 @@ class GameState (State):
         time.sleep(0.0001) # set game velocity by pausing
 
 
-    def end_game(self):
-        # Fill Screen
-        color = (35,0,0,100)
-        self.window.__surface__.fill(color)
-
-        # Display End Message
-        self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,100))
-
-
     def fire_bullet(self):
         if self.fire_rate <= self.frame_bullet:
             self.spawn_bullet()
@@ -195,6 +186,23 @@ class GameState (State):
         self.bullet_count -= 1
 
 
+    def end_game(self):
+        # Define the window variables
+        height = self.window.get_height()
+        width = self.window.get_width()
+
+        # Fill Screen
+        color = (35,0,0,100)
+        self.window.__surface__.fill(color)
+
+        # Display End Message
+        self.main_menu_button = rect((width/2)-38, (height*2/5)+50, 135, 28, window.__surface__,'green')
+
+        self.window.draw_string('You died.',(width/2)-34, (height*2/5)-14, pygame.Color(0,0,0,100))
+        self.window.draw_string('Game Over', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,100))
+        self.window.draw_string('Main Menu', (width/2)-38, (height*2/5)+70, pygame.Color(0,0,0,100))
+
+
     def update_enemies(self):
         height = self.window.get_height()
         width = self.window.get_width()
@@ -214,7 +222,7 @@ class GameState (State):
 
             # Check if the player is hit by an enemy and execute the end condition
             if(pygame.Rect.colliderect(enemy.rect.rectangle, self.player.rectangle)):
-                end_game()
+                self.end_game()
 
         # Display an empty amount of HP if there are no enemies
         if(len(self.enemies) == 0):
