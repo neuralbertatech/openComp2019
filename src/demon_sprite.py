@@ -38,6 +38,9 @@ class DemonSprite(pygame.sprite.Sprite):
         #finally we will update the image that will be displayed
         self.image = self.images[self.index]
 
-        #if self.index >= 0 and self.index <= 4:
+        if self.index >= 0 and self.index < 4:
+            self.rect.y -= 4
+        else:
+            self.rect.y += 9
 
         self.rect.set_content(self.image)
