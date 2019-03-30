@@ -13,6 +13,8 @@ class DemonSprite(pygame.sprite.Sprite):
         self.images.append(pygame.image.load('assets/demon5.png'))
         self.images.append(pygame.image.load('assets/demon6.png'))
 
+        self.sprite_rate = 0
+
 
 
         #index value to get the image from the array
@@ -35,4 +37,7 @@ class DemonSprite(pygame.sprite.Sprite):
 
         #finally we will update the image that will be displayed
         self.image = self.images[self.index]
-        print(self.index)
+
+        #if self.index >= 0 and self.index <= 4:
+
+        self.rect.set_content(self.image)

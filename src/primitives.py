@@ -41,3 +41,6 @@ class rect(primitive):
 
     def getY():
         return self.y
+
+    def set_content(self, content):
+        self.content = content
