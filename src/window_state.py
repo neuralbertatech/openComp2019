@@ -36,6 +36,7 @@ class MainMenuState (State):
         self.draw_buttons()
         self.window.update()
 
+
     def next(self, events):
         for event in events:
             # Clicked Mouse
@@ -65,6 +66,7 @@ class MainMenuState (State):
 
         return WindowState.main_menu
 
+
     def draw_buttons(self):
         width = self.window.get_width()
         height = self.window.get_height()
@@ -80,8 +82,10 @@ class MainMenuState (State):
         color = (35,99,47,100)
         self.window.__surface__.fill(color)
 
+
 class SettingsState (State):
     pass
+
 
 class GameState (State):
     def __init__(self, window):
@@ -89,7 +93,7 @@ class GameState (State):
         self.frame_bullet = 0
         self.frame_enemy = 0
         self.fire_rate = 100
-        self.queue = deque([100,200,400, 500, 650])
+        self.queue = deque([100, 200, 400, 500, 650])
         self.bullet_count = 1000
         self.enemies = []
         self.enemiesStrength = []
@@ -110,12 +114,18 @@ class GameState (State):
         self.score = pygame.time.get_ticks() // 1000
         time.sleep(0.0001) # set game velocity by pausing
 
+
+    def end_game(self):
+        pass
+
+
     def fire_bullet(self):
         if self.fire_rate <= self.frame_bullet:
             self.spawn_bullet()
             self.frame_bullet = 0
         else:
             self.frame_bullet += 1
+
 
     def next(self, events):
         for event in events:
@@ -146,8 +156,6 @@ class GameState (State):
         self.window.draw_string('Time: ' + str(self.score),  self.window.get_width() - self.window.get_string_width('Time: ' + str(self.score)), 30, pygame.Color(5,44,70,100))
 
 
-
-
     def generate_enemy(self):
         if random.randint(-2000, 0)+self.frame_enemy > 60 and self.frame_enemy > 60:
             self.spawn_enemy(random.randint(1,5))
@@ -173,15 +181,18 @@ class GameState (State):
         self.enemies.append(enemy)
         self.enemiesStrength.append(strength)
 
+
     def spawn_bullet(self):
         height = self.window.get_height()
         bullet = rect(100,height*4/5+67,30,5,self.window.__surface__, 'gray', 'bullet.png')
         self.projectiles.append(bullet)
         self.bullet_count -= 1
 
+
     def update_enemies(self):
         height = self.window.get_height()
         width = self.window.get_width()
+
         for enemy in self.enemies:
             pygame.Rect.move_ip(enemy.rect.rectangle, -1, 0)
             enemy.rect.x -= 1
@@ -192,9 +203,15 @@ class GameState (State):
             else:
                 enemy.sprite_rate += 1
 
+            # Display the next enemy's HP
             self.window.draw_string('Next Enemy HP: ' + str(self.enemiesStrength[0] + 1),  width - self.window.get_string_width('Next Enemy HP: ' + str(self.enemiesStrength[0] + 1)), 0, pygame.Color(5,44,70,100))
 
-        # Display an empty amount of HP if
+            # Check if the player is hit by an enemy and execute the end condition
+            if(pygame.Rect.colliderect(enemy.rect.rectangle, self.player.rectangle)):
+                end_game()
+                print("You died.")
+
+        # Display an empty amount of HP if there are no enemies
         if(len(self.enemies) == 0):
             self.window.draw_string('Next Enemy HP:  ',  width - self.window.get_string_width('Next Enemy HP:  '), 0, pygame.Color(5,44,70,100))
 
@@ -208,6 +225,7 @@ class GameState (State):
 
             if(pygame.Rect.collidepoint(projectile.rectangle, 1280, height*4/5+67)):
                 self.projectiles.pop(0)
+
 
     def check_collision(self):
         try:

@@ -16,7 +16,6 @@ class DemonSprite(pygame.sprite.Sprite):
         self.sprite_rate = 0
 
 
-
         #index value to get the image from the array
         #initially it is 0
         self.index = 0
