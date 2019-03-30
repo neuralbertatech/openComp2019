@@ -32,6 +32,7 @@ class MainMenuState (State):
         self.settings_button = rect((width/2)-68, (height*2/5)+20, 135, 28, window.__surface__,'green')
         self.quit_button = rect((width/2)-38, (height*2/5)+50, 135, 28, window.__surface__,'green')
 
+
     def run(self):
         self.draw_buttons()
         self.window.update()
@@ -116,7 +117,12 @@ class GameState (State):
 
 
     def end_game(self):
-        pass
+        # Fill Screen
+        color = (35,0,0,100)
+        self.window.__surface__.fill(color)
+
+        # Display End Message
+        self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,100))
 
 
     def fire_bullet(self):
@@ -209,7 +215,6 @@ class GameState (State):
             # Check if the player is hit by an enemy and execute the end condition
             if(pygame.Rect.colliderect(enemy.rect.rectangle, self.player.rectangle)):
                 end_game()
-                print("You died.")
 
         # Display an empty amount of HP if there are no enemies
         if(len(self.enemies) == 0):
