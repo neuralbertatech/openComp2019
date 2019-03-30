@@ -163,7 +163,7 @@ class GameState (State):
         # if strength == 1:
         #     enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
         # elif strength == 2:
-        enemy = DemonSprite(width-50,height*4/5,50,200,self.window.__surface__, 'red')
+        enemy = DemonSprite(width-200,height*3/5,50,200,self.window.__surface__, 'red')
         # elif strength == 3:
         #     enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
         # elif strength == 4:
@@ -184,7 +184,13 @@ class GameState (State):
         width = self.window.get_width()
         for enemy in self.enemies:
             pygame.Rect.move_ip(enemy.rect.rectangle, -1, 0)
-            enemy.update()
+            enemy.rect.x -= 1
+
+            if enemy.sprite_rate >= 7:
+                enemy.update()
+                enemy.sprite_rate = 0
+            else:
+                enemy.sprite_rate += 1
 
             self.window.draw_string('Next Enemy HP: ' + str(self.enemiesStrength[0] + 1),  width - self.window.get_string_width('Next Enemy HP: ' + str(self.enemiesStrength[0] + 1)), 0, pygame.Color(5,44,70,100))
 
