@@ -220,8 +220,8 @@ class GameState (State):
         height = self.window.get_height()
 
         for projectile in self.projectiles:
-            pygame.Rect.move_ip(projectile.rectangle, 15, 0)
-            projectile.x += 15
+            pygame.Rect.move_ip(projectile.rectangle, 40, 0)
+            projectile.x += 40
 
             if(pygame.Rect.collidepoint(projectile.rectangle, 1280, height*4/5+67)):
                 self.projectiles.pop(0)
