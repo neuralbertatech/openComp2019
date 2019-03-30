@@ -177,7 +177,7 @@ class GameState (State):
         # if strength == 1:
         #     enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
         # elif strength == 2:
-        enemy = DemonSprite(width-200,height*3/5,50,200,self.window.__surface__, 'red')
+        enemy = DemonSprite(width-200,height*3/5,200,400,self.window.__surface__, 'red')
         # elif strength == 3:
         #     enemy = rect(width-50,height*4/5,50,200,self.window.__surface__, 'red', 'zombie.png')
         # elif strength == 4:
@@ -234,7 +234,7 @@ class GameState (State):
 
     def check_collision(self):
         try:
-            if( pygame.Rect.colliderect(self.enemies[0].rectangle, self.projectiles[0].rectangle) ):
+            if( pygame.Rect.colliderect(self.enemies[0].rect.rectangle, self.projectiles[0].rectangle) ):
                 self.projectiles.pop(0)
 
                 if(self.enemiesStrength[0] == 0):
