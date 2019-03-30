@@ -229,7 +229,7 @@ class GameState (State):
 
     def check_collision(self):
         try:
-            if( pygame.Rect.colliderect(self.enemies[0].rectangle, self.projectiles[0].rectangle) ):
+            if( pygame.Rect.colliderect(self.enemies[0].rect.rectangle, self.projectiles[0].rectangle) ):
                 self.projectiles.pop(0)
 
                 if(self.enemiesStrength[0] == 0):
