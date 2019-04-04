@@ -155,7 +155,7 @@ class GameState (State):
                 if event.key == pygame.K_p:
                     self.fire_rate = 8
                 if event.key == pygame.K_l:
-                    self.fire_rate = 100
+                    self.fire_rate = 10000
 
         if self.game_over:
             self.final_score = self.score
@@ -205,12 +205,12 @@ class GameState (State):
             self.spawn_enemy(random.randint(1,15))
             self.frame_enemy = 0
 
-            if random.randint(0, 10) > 7:
+            if random.randint(0, 10) > 8:
                 self.wave = True
         else:
             self.frame_enemy += 1
 
-            if self.frame_enemy > 500:
+            if self.frame_enemy > random.randint(300, 600):
                 self.wave = False
 
 
