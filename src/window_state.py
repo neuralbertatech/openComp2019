@@ -104,7 +104,7 @@ class GameState (State):
         self.frame_enemy = 0
         self.fire_rate = 100
         self.queue = deque([100, 200, 400, 500, 650])
-        self.bullet_count = 1000
+        self.bullet_count = 200
         self.enemies = []
         self.enemiesStrength = []
         self.score = 0
@@ -113,6 +113,8 @@ class GameState (State):
         self.projectiles = []
         self.game_over = False
         self.dead_enemies = []
+
+        self.wave = False
 
         self.soldier = []
         self.soldier.append(pygame.image.load('assets/soldier1.png'))
@@ -140,7 +142,7 @@ class GameState (State):
 
 
     def fire_bullet(self):
-        if self.fire_rate <= self.frame_bullet:
+        if self.fire_rate <= self.frame_bullet and self.bullet_count > 0:
             self.spawn_bullet()
             self.frame_bullet = 0
         else:
@@ -151,11 +153,9 @@ class GameState (State):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
-                    if self.fire_rate > 10:
-                        self.fire_rate -= 10
+                    self.fire_rate = 8
                 if event.key == pygame.K_l:
-                    if self.fire_rate < 100:
-                        self.fire_rate += 10
+                    self.fire_rate = 100
 
         if self.game_over:
             self.final_score = self.score
@@ -201,11 +201,17 @@ class GameState (State):
 
 
     def generate_enemy(self):
-        if random.randint(-2000, 0)+self.frame_enemy > 60 and self.frame_enemy > 60:
-            self.spawn_enemy(random.randint(1,5))
+        if random.randint(-2000, 0)+self.frame_enemy > 60 and self.frame_enemy > 60 and self.wave is False:
+            self.spawn_enemy(random.randint(1,15))
             self.frame_enemy = 0
+
+            if random.randint(0, 10) > 7:
+                self.wave = True
         else:
             self.frame_enemy += 1
+
+            if self.frame_enemy > 500:
+                self.wave = False
 
 
     def spawn_enemy(self, strength):
