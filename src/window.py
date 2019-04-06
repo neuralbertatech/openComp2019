@@ -4,8 +4,10 @@ from pygame.font import SysFont, Font
 from pygame.event import poll
 from pygame.key import get_pressed, name
 import pygame as pygame
-from Stream.stream_data import Stream
-
+try:
+    from Stream.stream_data import Stream
+except:
+    pass
 class Window:
     # A Window represents a display window with a title bar,
     # close box and interior drawing surface.
@@ -26,9 +28,12 @@ class Window:
         self.__font_color__ = 'white'
         self.__bg_color__ = 'black'
         self.__auto_update__ = True
-        self.stream = Stream()
-        self.stream.start()
 
+        try:
+            self.stream = Stream()
+            self.stream.start()
+        except:
+            pass
     def close(self):
         # Close the window
         # - self is the Window
@@ -96,7 +101,7 @@ class Window:
         image = pygame.image.load(image_png)
         image = pygame.transform.scale(image, (self.get_width(), self.get_height()))
         self.__surface__.blit(image, [0,0])
-    
+
     def get_width(self):
         # Return the int pixel width of the window's drawable
         # interior surface

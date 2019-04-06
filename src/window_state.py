@@ -150,11 +150,14 @@ class GameState (State):
 
 
     def next(self, events):
-        if self.window.stream.state == 'high_alpha':
-            self.fire_rate = 8
-        elif self.window.stream.state == 'low_alpha':
-            self.fire_rate = 10000
 
+        try:
+            if self.window.stream.state == 'high_alpha':
+                self.fire_rate = 8
+            elif self.window.stream.state == 'low_alpha':
+                self.fire_rate = 10000
+        except:
+            pass
         #for event in events:
         #    if event.type == pygame.KEYDOWN:
         #        if event.key == pygame.K_p:

@@ -1,6 +1,13 @@
 import pygame
 
-# class we use to make hit boxes in the game
+# class we use to make hit boxes in the game. It utilizes the
+class primitive:
+    def draw(self):
+        assert 0
+
+    def intersect(self, x, y):
+        assert 0
+
 class rect(primitive):
     def __init__(self, x, y, w, h, screen, colour, content = None):
         self.rectangle = pygame.Rect(x, y, w, h)
