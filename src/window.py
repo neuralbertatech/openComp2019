@@ -4,7 +4,7 @@ from pygame.font import SysFont, Font
 from pygame.event import poll
 from pygame.key import get_pressed, name
 import pygame as pygame
-
+from Stream.stream_data import Stream
 
 class Window:
     # A Window represents a display window with a title bar,
@@ -26,11 +26,13 @@ class Window:
         self.__font_color__ = 'white'
         self.__bg_color__ = 'black'
         self.__auto_update__ = True
+        self.stream = Stream()
+        self.stream.start()
 
     def close(self):
         # Close the window
         # - self is the Window
-
+        self.stream.stop()
         quit()
 
     def set_font_name(self, name):
