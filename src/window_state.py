@@ -158,12 +158,12 @@ class GameState (State):
                 self.fire_rate = 10000
         except:
             pass
-        #for event in events:
-        #    if event.type == pygame.KEYDOWN:
-        #        if event.key == pygame.K_p:
-        #            self.fire_rate = 8
-        #        if event.key == pygame.K_l:
-        #            self.fire_rate = 10000
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    self.fire_rate = 8
+                if event.key == pygame.K_l:
+                    self.fire_rate = 10000
 
         if self.game_over:
             self.final_score = self.score

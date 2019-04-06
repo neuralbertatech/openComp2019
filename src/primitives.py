@@ -1,6 +1,6 @@
 import pygame
 
-# class we use to make hit boxes in the game. It utilizes the
+# object primitives
 class primitive:
     def draw(self):
         assert 0
@@ -8,26 +8,34 @@ class primitive:
     def intersect(self, x, y):
         assert 0
 
+# class for the hitboxes of the game
+# also draws the
 class rect(primitive):
     def __init__(self, x, y, w, h, screen, colour, content = None):
-        self.rectangle = pygame.Rect(x, y, w, h)
-        self.screen = screen
 
+        # create a python rectangle
+        self.rectangle = pygame.Rect(x, y, w, h)
+        self.screen = screen # where everything is printed
+
+        # coordingates of the rectangle
         self.x = x
         self.y = y
+        # attributes of the rectangle
         self.width = w
         self.height = h
         self.colour = colour
-        self.content = content
+        self.content = content # the image that will be displayed
 
+    # draw the rectangle. If there is no image then do not draw anything
     def draw(self):
         if self.content == None:
             pass
-        elif  not isinstance(self.content,str):
+        elif not isinstance(self.content,str):
              self.screen.blit(self.content, (self.x, self.y))
         else:
             self.screen.blit(pygame.image.load(self.content), (self.x, self.y))
 
+    # checks if the player clicked on something
     def intersect(self, pos):
         x = pos[0]
         y = pos[1]
@@ -37,6 +45,7 @@ class rect(primitive):
 
         return False
 
+    
     def getX():
         return self.x
 
