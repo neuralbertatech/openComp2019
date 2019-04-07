@@ -4,6 +4,7 @@ from collections import deque
 import pygame
 import time
 import random
+import math
 from demon_sprite import DemonSprite
 from demon_sprite import Death
 
@@ -35,7 +36,7 @@ class MainMenuState (State):
 
     def run(self):
         self.draw_bg()
-        self.draw_buttons()
+        self.draw_buttons(True)
         self.window.update()
 
 
@@ -72,29 +73,28 @@ class MainMenuState (State):
         return WindowState.main_menu
 
 
-    def draw_buttons(self):
+    def draw_buttons(self, reading_EEG_data):
         width = self.window.get_width()
         height = self.window.get_height()
         self.play_button.draw()
         self.settings_button.draw()
-        self.window.set_font_size(40)
-        self.window.draw_string('Play',(width/2)-34, (height*2/5)-14, pygame.Color(0,0,0,100))
-        self.window.draw_string('Settings', (width/2)-68, (height*2/5)+20, pygame.Color(0,0,0,100))
-        self.window.draw_string('Quit', (width/2)-38, (height*2/5)+50, pygame.Color(0,0,0,100))
 
+        if (reading_EEG_data):
+            self.window.set_font_size(20)
+            self.window.draw_string('Reading EEG baseline, please wait...',(width/2)-(self.window.get_string_width('Reading EEG baseline, please wait...'))/2, (height*2/5), pygame.Color(0,0,0,255))
+
+
+        else:
+            self.window.set_font_size(40)
+            #self.window.draw_string('                                                         ',(width/2)-(self.window.get_string_width('                                                         '))/2, (height*2/5)-14, pygame.Color(0,0,0,255))
+            self.window.draw_string('Play',(width/2) - (self.window.get_string_width('Play'))/2, (height*2/5)-14, pygame.Color(0,0,0,255))
+
+        self.window.set_font_size(40)
+        self.window.draw_string('Quit', (width/2)-(self.window.get_string_width('Quit'))/2, (height*2/5)+20, pygame.Color(0,0,0,255))
 
     def draw_bg(self):
         color = (0,0,0,255)
         self.window.__surface__.fill(color)
-
-
-class SettingsState (State):
-    def __init__(self, window):
-        self.window = window
-
-    def draw(self):
-        width = self.window.get_width()
-        height = self.window.get_height()
 
 
 class GameState (State):
@@ -204,7 +204,11 @@ class GameState (State):
                 self.soldier_index += 1
         else:
             self.player.draw()
-        self.window.draw_string('Time: ' + str(self.score),  self.window.get_width() - self.window.get_string_width('Time: ' + str(self.score)), 30, pygame.Color(5,44,70,100))
+
+        if(self.score%60 < 10):
+            self.window.draw_string('Time: ' + str(math.floor(self.score/60)) + ':0' + str(self.score%60),  self.window.get_width() - self.window.get_string_width('Time: ' + str(math.floor(self.score/60)) + ':0' + str(self.score%60)), 30, pygame.Color(5,44,70,100))
+        else:
+            self.window.draw_string('Time: ' + str(math.floor(self.score/60)) + ':' + str(self.score%60),  self.window.get_width() - self.window.get_string_width('Time: ' + str(math.floor(self.score/60)) + ':' + str(self.score%60)), 30, pygame.Color(5,44,70,100))
 
 
 
@@ -349,7 +353,10 @@ class EndGameState (State):
         self.window.draw_string('GAME OVER',(width/2)-90, (height*2/5)-14, pygame.Color(35,0,0,0))
         self.window.draw_string('You died.', (width/2)-60, (height*2/5)+20, pygame.Color(35,0,0,0))
 
-        self.window.draw_string('You survived ' + str(WindowState.game.state.final_score) + ' seconds',  (width/2) - (self.window.get_string_width('You survived ' + str(WindowState.game.state.final_score) + ' seconds'))/2, (height*2/5)+50, pygame.Color(35,0,0,0))
+        if(WindowState.game.state.final_score > 120 or WindowState.game.state.final_score < 60 ):
+            self.window.draw_string('You survived ' + str(math.floor(WindowState.game.state.final_score/60)) + ' minutes ' + str(WindowState.game.state.final_score%60) + ' seconds',  (width/2) - (self.window.get_string_width('You survived ' + str(math.floor(WindowState.game.state.final_score/60)) + ' minutes ' + str(WindowState.game.state.final_score%60) + ' seconds'))/2, (height*2/5)+50, pygame.Color(35,0,0,0))
+        else:
+            self.window.draw_string('You survived ' + str(math.floor(WindowState.game.state.final_score/60)) + ' minute ' + str(WindowState.game.state.final_score%60) + ' seconds',  (width/2) - (self.window.get_string_width('You survived ' + str(math.floor(WindowState.game.state.final_score/60)) + ' minute ' + str(WindowState.game.state.final_score%60) + ' seconds'))/2, (height*2/5)+50, pygame.Color(35,0,0,0))
 
         self.window.draw_string('Main Menu', (width/2)-75, (height*2/5)+100, pygame.Color(35,0,0,0))
 

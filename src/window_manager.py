@@ -7,7 +7,6 @@ class WindowManager:
 
         # Register the window states
         WindowState.main_menu = WindowState('main_menu', MainMenuState(self.window))
-        WindowState.settings = WindowState('settings', None) #SettingsState(self.window))
         WindowState.game = WindowState('game', GameState(self.window))
         WindowState.end_game = WindowState('end_game', EndGameState(self.window))
 
