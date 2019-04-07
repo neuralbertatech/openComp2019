@@ -353,7 +353,7 @@ class EndGameState (State):
         self.window.draw_string('GAME OVER',(width/2)-90, (height*2/5)-14, pygame.Color(35,0,0,0))
         self.window.draw_string('You died.', (width/2)-60, (height*2/5)+20, pygame.Color(35,0,0,0))
 
-        if(WindowState.game.state.final_score > 120 or WindowState.game.state.final_score < 60 ):
+        if(WindowState.game.state.final_score >= 120 or WindowState.game.state.final_score < 60 ):
             self.window.draw_string('You survived ' + str(math.floor(WindowState.game.state.final_score/60)) + ' minutes ' + str(WindowState.game.state.final_score%60) + ' seconds',  (width/2) - (self.window.get_string_width('You survived ' + str(math.floor(WindowState.game.state.final_score/60)) + ' minutes ' + str(WindowState.game.state.final_score%60) + ' seconds'))/2, (height*2/5)+50, pygame.Color(35,0,0,0))
         else:
             self.window.draw_string('You survived ' + str(math.floor(WindowState.game.state.final_score/60)) + ' minute ' + str(WindowState.game.state.final_score%60) + ' seconds',  (width/2) - (self.window.get_string_width('You survived ' + str(math.floor(WindowState.game.state.final_score/60)) + ' minute ' + str(WindowState.game.state.final_score%60) + ' seconds'))/2, (height*2/5)+50, pygame.Color(35,0,0,0))
