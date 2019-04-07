@@ -11,3 +11,8 @@
  
  
  ## How to run...
+ ### pip install the following packages.
+ * pygame
+ * muselsl
+ * numpy
+ * 
