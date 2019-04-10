@@ -20,4 +20,8 @@ Streaming
 ```
  If you do not try running again.
  
- Then, with the muse on your head, open a new terminal and run `python3 src/main.py`
+ Then, with the muse on your head, open a new terminal and run 
+ ```
+ cd src
+ python3 main.py
+ ```
