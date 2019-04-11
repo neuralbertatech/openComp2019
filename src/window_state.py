@@ -32,11 +32,15 @@ class MainMenuState (State):
         self.play_button = rect((width/2)-34, (height*2/5)-14, 68, 28, window.__surface__,'green')
         self.settings_button = rect((width/2)-68, (height*2/5)+20, 135, 28, window.__surface__,'green')
         self.quit_button = rect((width/2)-38, (height*2/5)+50, 135, 28, window.__surface__,'green')
+        self.reading_eeg_data = True
+        self.start_time = time.time()
 
 
     def run(self):
+        if (time.time() - self.start_time) >= 13.0:
+            self.reading_eeg_data = False
         self.draw_bg()
-        self.draw_buttons(True)
+        self.draw_buttons()
         self.window.update()
 
 
@@ -53,16 +57,18 @@ class MainMenuState (State):
                     WindowState.game.state.__init__(self.window)
                     return WindowState.game
 
-                # Clicked on Settings Button
-                elif self.settings_button.intersect(pos):
-                    self.draw_bg()
-                    # NOT IMPLEMENTED YET
-                    return WindowState.settings
-
                 # Clicked on Quit Button
-                elif self.quit_button.intersect(pos):
+                elif self.reading_eeg_data and self.quit_button.intersect(pos):
                     # Purposely crash program
-                    return
+                    self.reading_eeg_data = False
+                    #return
+
+                # # Clicked on Settings Button
+                # elif self.settings_button.intersect(pos):
+                #     self.draw_bg()
+                #     # NOT IMPLEMENTED YET
+                #     return WindowState.settings
+
 
             # Pressed return key, start game
             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
@@ -73,13 +79,13 @@ class MainMenuState (State):
         return WindowState.main_menu
 
 
-    def draw_buttons(self, reading_EEG_data):
+    def draw_buttons(self):
         width = self.window.get_width()
         height = self.window.get_height()
         self.play_button.draw()
         self.settings_button.draw()
 
-        if (reading_EEG_data):
+        if (self.reading_eeg_data == True):
             self.window.set_font_size(20)
             self.window.draw_string('Reading EEG baseline, please wait...',(width/2)-(self.window.get_string_width('Reading EEG baseline, please wait...'))/2, (height*2/5), pygame.Color(0,0,0,255))
 
