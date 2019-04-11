@@ -18,15 +18,17 @@
 
   ` brew install python3 `
 
- > download files using git
+ > download files using git in root directory
 
+
+  ` cd ~ `
   ` git clone https://github.com/neuralbertatech/openComp2019 `
 
 
 
  > move to project folder 
 
- ` cd openComp2019 `
+ ` cd ~/openComp2019 `
 
  > Configure a virtual environment to contain dependencies
 
@@ -47,6 +49,15 @@
 
 
  ### To run
+  > move to project folder 
+
+ ` cd ~/openComp2019 `
+
+ > Activate the environment
+
+ ` source venv/bin/activate `
+
+
  Run `python3 src/Stream/muse-lsl.py` from the root of the repository, you should see
  ```
  Found device Muse-XXXX : XX:XX:XX:XX:XX:XX
@@ -55,7 +66,15 @@ Streaming
 ```
  If you do not try running again.
  
- Then, with the muse on your head, open a new terminal and run 
+ Then, with the muse on your head, open a new terminal `Command + t` 
+
+  > Activate the environment
+
+ ` source venv/bin/activate `
+
+
+ and run: 
+
  ```
  cd src
  python3 main.py
