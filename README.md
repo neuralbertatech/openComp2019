@@ -23,7 +23,6 @@
   ` git clone https://github.com/neuralbertatech/openComp2019 `
 
 
- * To install the required software run `pip install -r requirements.txt`
 
  > move to project folder 
 
@@ -34,8 +33,17 @@
  ` python3 -m venv venv `
 
  > Activate the environment
- 
+
  ` source venv/bin/activate `
+
+ > Update Pip installer
+
+ ` pip install --upgrade pip`
+
+ > To install the required software run 
+
+ `pip install -r requirements.txt`
+
 
 
  ### To run
