@@ -10,6 +10,8 @@
  * A MacOS machine (should also work on linux, but it has not been tested)
  * Requires python3
 
+ * open terminal with `command + space` and type `terminal` and press `enter`
+
  > install homebrew with
 
   ` ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" `
