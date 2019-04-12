@@ -97,6 +97,8 @@ class MainMenuState (State):
 
         self.window.set_font_size(40)
         self.window.draw_string('Quit', (width/2)-(self.window.get_string_width('Quit'))/2, (height*2/5)+20, pygame.Color(0,0,0,255))
+        self.window.set_font_size(60)
+        self.window.draw_string('AlphaBlaster', (width/2)-(self.window.get_string_width('AlphaBlaster'))/2, (height*2/5)-80, pygame.Color(0,0,0,255))
 
     def draw_bg(self):
         color = (0,0,0,255)
