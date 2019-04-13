@@ -30,8 +30,7 @@ class MainMenuState (State):
         width = self.window.get_width()
         height = self.window.get_height()
         self.play_button = rect((width/2)-34, (height*2/5)-14, 68, 28, window.__surface__,'green')
-        self.settings_button = rect((width/2)-68, (height*2/5)+20, 135, 28, window.__surface__,'green')
-        self.quit_button = rect((width/2)-38, (height*2/5)+50, 135, 28, window.__surface__,'green')
+        self.quit_button = rect((width/2)-68, (height*2/5)+20, 135, 28, window.__surface__,'green')
         self.reading_eeg_data = True
         self.start_time = time.time()
 
@@ -58,16 +57,10 @@ class MainMenuState (State):
                     return WindowState.game
 
                 # Clicked on Quit Button
-                elif self.reading_eeg_data and self.quit_button.intersect(pos):
-                    # Purposely crash program
+                elif self.quit_button.intersect(pos):
+                    # Crash the program
                     self.reading_eeg_data = False
-                    #return
-
-                # # Clicked on Settings Button
-                # elif self.settings_button.intersect(pos):
-                #     self.draw_bg()
-                #     # NOT IMPLEMENTED YET
-                #     return WindowState.settings
+                    assert(0)
 
 
             # Pressed return key, start game
@@ -83,7 +76,7 @@ class MainMenuState (State):
         width = self.window.get_width()
         height = self.window.get_height()
         self.play_button.draw()
-        self.settings_button.draw()
+        self.quit_button.draw()
 
         if (self.reading_eeg_data == True):
             self.window.set_font_size(20)
@@ -92,13 +85,13 @@ class MainMenuState (State):
 
         else:
             self.window.set_font_size(40)
-            #self.window.draw_string('                                                         ',(width/2)-(self.window.get_string_width('                                                         '))/2, (height*2/5)-14, pygame.Color(0,0,0,255))
             self.window.draw_string('Play',(width/2) - (self.window.get_string_width('Play'))/2, (height*2/5)-14, pygame.Color(0,0,0,255))
 
         self.window.set_font_size(40)
         self.window.draw_string('Quit', (width/2)-(self.window.get_string_width('Quit'))/2, (height*2/5)+20, pygame.Color(0,0,0,255))
         self.window.set_font_size(60)
         self.window.draw_string('AlphaBlaster', (width/2)-(self.window.get_string_width('AlphaBlaster'))/2, (height*2/5)-80, pygame.Color(0,0,0,255))
+        self.window.set_font_size(40)
 
     def draw_bg(self):
         color = (0,0,0,255)
@@ -358,7 +351,7 @@ class EndGameState (State):
         height = self.window.get_height()
         self.main_menu_button.draw()
         self.window.set_font_size(40)
-        self.window.draw_string('GAME OVER',(width/2)-90, (height*2/5)-14, pygame.Color(35,0,0,0))
+        # self.window.draw_string('GAME OVER',(width/2)-90, (height*2/5)-14, pygame.Color(35,0,0,0))
         self.window.draw_string('You died.', (width/2)-60, (height*2/5)+20, pygame.Color(35,0,0,0))
 
         if(WindowState.game.state.final_score >= 120 or WindowState.game.state.final_score < 60 ):
