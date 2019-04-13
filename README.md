@@ -88,3 +88,14 @@
  cd src
  python3 main.py
  ```
+
+# Known Problems
+## "zlib not available" Error when installing python 3.6.5
+ This problem is caused by the Xcode toolchain not including all needed headers in /include, so to fix it run
+ ```
+  CFLAGS="-I$(brew --prefix readline)/include -I$(brew --prefix openssl)/include -I$(xcrun --show-sdk-path)/usr/include" \
+  LDFLAGS="-L$(brew --prefix readline)/lib -L$(brew --prefix openssl)/lib" \
+  PYTHON_CONFIGURE_OPTS=--enable-unicode=ucs2 \
+  pyenv install -v 3.6.5
+```
+ 
