@@ -8,7 +8,7 @@
  * A muse headset
  * A bluegiga bled112 bluetooth dongle
  * A MacOS machine (should also work on linux, but it has not been tested)
- * Requires python3
+ * Requires python 3.6.5
 
  * open terminal with `command + space` and type `terminal` and press `enter`
 
