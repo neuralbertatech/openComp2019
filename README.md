@@ -18,7 +18,11 @@
 
  > then install venv and pyenv with
 
-  ` brew install venv pyenv `
+  ` brew install venv `
+  
+  and
+  
+  ` brew install pyenv `
 
  > download files using git in root directory
 
