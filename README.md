@@ -83,6 +83,7 @@
 
  ```
   pyenv local 3.6.5
+  eval "$(pyenv init -)"
   source venv/bin/activate 
  ```
 
