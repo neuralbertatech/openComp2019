@@ -75,7 +75,7 @@
  Connected
  Streaming
 ```
- If you do not try running again.
+ If it doesn't work, try running again.
  
  Then, with the muse on your head, open a new terminal `Command + t` 
 
