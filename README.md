@@ -66,6 +66,10 @@
 
  > Activate the environment
 
+ ` pyenv local 3.6.5 `
+
+ and
+ 
  ` source venv/bin/activate `
 
 
