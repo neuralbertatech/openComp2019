@@ -24,6 +24,7 @@
 
 
   ` cd ~ `
+  
   ` git clone https://github.com/neuralbertatech/openComp2019 `
 
 
