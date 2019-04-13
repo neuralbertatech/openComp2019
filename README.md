@@ -16,9 +16,9 @@
 
   ` ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" `
 
- > then install python3 with
+ > then install venv and pyenv with
 
-  ` brew install python3 `
+  ` brew install venv pyenv `
 
  > download files using git in root directory
 
@@ -34,7 +34,11 @@
 
  > Configure a virtual environment to contain dependencies
 
- ` python3 -m venv venv `
+ ```
+  pyenv install 3.6.5
+  pyenv local 3.6.5
+  python3 -m venv venv
+ ```
 
  > Activate the environment
 
@@ -63,8 +67,8 @@
  Run `python3 src/Stream/muse-lsl.py` from the root of the repository, you should see
  ```
  Found device Muse-XXXX : XX:XX:XX:XX:XX:XX
-Connected
-Streaming
+ Connected
+ Streaming
 ```
  If you do not try running again.
  
@@ -72,7 +76,10 @@ Streaming
 
   > Activate the environment
 
- ` source venv/bin/activate `
+ ```
+  pyenv local 3.6.5
+  source venv/bin/activate 
+ ```
 
 
  and run: 
