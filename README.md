@@ -1,7 +1,7 @@
 # Open Competition 2019
  
  ## Project Description
- AlphaBlaster is a small 2D shooter game that utalizes the users attentivness towards the game to control the player. We do this by analizing the users alpha waves using a Muse headset to determine whether or not the player is shooting the incoming waves of enemies. For a more detailed description read through https://github.com/neuralbertatech/openComp2019/wiki
+ AlphaBlaster is a small 2D shooter game that utilizes the users attentiveness towards the game to control the player. We do this by analyzing the user’s alpha waves using a Muse headset to determine whether or not the player is shooting the incoming waves of enemies. For a more detailed description read through https://github.com/neuralbertatech/openComp2019/wiki
  
  ## How to run...
  ### Requirements
